@@ -1,23 +1,28 @@
 #![recursion_limit = "512"]
 
 use html::content::Section;
+
+use crate::json_resume::{
+    Award, Basics, Certificate, Education, Interest, Language, Meta, Project, Publication,
+    Reference, Skill, VolunteerExperience, WorkExperience,
+};
 mod json_resume;
 
 trait HTMLResume {
-    fn build_basics() -> Option<Section>;
-    fn build_work() -> Option<Section>;
-    fn build_volunteer() -> Option<Section>;
-    fn build_education() -> Option<Section>;
-    fn build_awards() -> Option<Section>;
-    fn build_certificates() -> Option<Section>;
-    fn build_publications() -> Option<Section>;
-    fn build_skills() -> Option<Section>;
-    fn build_languages() -> Option<Section>;
-    fn build_interests() -> Option<Section>;
-    fn build_references() -> Option<Section>;
-    fn build_projects() -> Option<Section>;
-    fn build_side_projects() -> Option<Section>;
-    fn build_meta() -> Option<Section>;
+    fn build_basics(basics: Option<Basics>) -> Option<Section>;
+    fn build_work(work: Option<Vec<WorkExperience>>) -> Option<Section>;
+    fn build_volunteer(volunteer: Option<Vec<VolunteerExperience>>) -> Option<Section>;
+    fn build_education(education: Option<Vec<Education>>) -> Option<Section>;
+    fn build_awards(awards: Option<Vec<Award>>) -> Option<Section>;
+    fn build_certificates(certificates: Option<Vec<Certificate>>) -> Option<Section>;
+    fn build_publications(publications: Option<Vec<Publication>>) -> Option<Section>;
+    fn build_skills(skills: Option<Vec<Skill>>) -> Option<Section>;
+    fn build_languages(languages: Option<Vec<Language>>) -> Option<Section>;
+    fn build_interests(interests: Option<Vec<Interest>>) -> Option<Section>;
+    fn build_references(references: Option<Vec<Reference>>) -> Option<Section>;
+    fn build_projects(projects: Option<Vec<Project>>) -> Option<Section>;
+    fn build_side_projects(projects: Option<Vec<Project>>) -> Option<Section>;
+    fn build_meta(meta: Option<Meta>) -> Option<Section>;
 }
 
 fn main() {
