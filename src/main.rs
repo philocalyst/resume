@@ -1,12 +1,18 @@
 #![recursion_limit = "512"]
 
+use std::collections::HashMap;
+
 use html::content::Section;
 use typst;
 
-use crate::json_resume::{
-    Award, Basics, Certificate, Education, Interest, Language, Meta, Project, Publication,
-    Reference, Resume, Skill, VolunteerExperience, WorkExperience,
+use crate::{
+    example::ResumeBuilder,
+    json_resume::{
+        Award, Basics, Certificate, Education, Interest, Language, Location, Meta, Project,
+        Publication, Reference, Resume, Skill, VolunteerExperience, WorkExperience,
+    },
 };
+mod example;
 mod json_resume;
 
 trait ToHTMLResume {
@@ -27,9 +33,34 @@ trait ToHTMLResume {
 }
 
 trait ToTypstResume {
-    fn build_resume(resume: Resume) -> typst::Syntax::ast;
+    fn build_resume<'a>(resume: Resume) -> typst::syntax::ast::Markup<'a>;
 }
 
 fn main() {
-    println!("Hello, world!");
+    let basics = Some(Basics {
+        name: Some("John Doe".to_string()),
+        label: Some("Software Engineer".to_string()),
+        email: Some("john@example.com".to_string()),
+        phone: Some("+1-555-0123".to_string()),
+        url: Some("https://johndoe.dev".parse().unwrap()),
+        summary: Some(
+            "Experienced software engineer with a passion for building scalable systems."
+                .to_string(),
+        ),
+        location: Some(Location {
+            city: Some("San Francisco".to_string()),
+            country_code: Some("US".to_string()),
+            address: None,
+            postal_code: None,
+            region: None,
+            additional_properties: HashMap::default(),
+        }),
+        image: None,
+        profiles: None,
+        additional_properties: HashMap::default(),
+    });
+
+    if let Some(basics_section) = ResumeBuilder::build_basics(basics) {
+        println!("{}", basics_section);
+    };
 }
