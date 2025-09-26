@@ -1,14 +1,15 @@
 #![recursion_limit = "512"]
 
 use html::content::Section;
+use typst;
 
 use crate::json_resume::{
     Award, Basics, Certificate, Education, Interest, Language, Meta, Project, Publication,
-    Reference, Skill, VolunteerExperience, WorkExperience,
+    Reference, Resume, Skill, VolunteerExperience, WorkExperience,
 };
 mod json_resume;
 
-trait HTMLResume {
+trait ToHTMLResume {
     fn build_basics(basics: Option<Basics>) -> Option<Section>;
     fn build_work(work: Option<Vec<WorkExperience>>) -> Option<Section>;
     fn build_volunteer(volunteer: Option<Vec<VolunteerExperience>>) -> Option<Section>;
@@ -23,6 +24,10 @@ trait HTMLResume {
     fn build_projects(projects: Option<Vec<Project>>) -> Option<Section>;
     fn build_side_projects(projects: Option<Vec<Project>>) -> Option<Section>;
     fn build_meta(meta: Option<Meta>) -> Option<Section>;
+}
+
+trait ToTypstResume {
+    fn build_resume(resume: Resume) -> typst::Syntax::ast;
 }
 
 fn main() {
