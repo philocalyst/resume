@@ -4,20 +4,20 @@ use html::content::Section;
 mod json_resume;
 
 trait HTMLResume {
-    fn build_basics() -> Section;
-    fn build_work() -> Section;
-    fn build_volunteer() -> Section;
-    fn build_education() -> Section;
-    fn build_awards() -> Section;
-    fn build_certificates() -> Section;
-    fn build_publications() -> Section;
-    fn build_skills() -> Section;
-    fn build_languages() -> Section;
-    fn build_interests() -> Section;
-    fn build_references() -> Section;
-    fn build_projects() -> Section;
-    fn build_side_projects() -> Section;
-    fn build_meta() -> Section;
+    fn build_basics() -> Option<Section>;
+    fn build_work() -> Option<Section>;
+    fn build_volunteer() -> Option<Section>;
+    fn build_education() -> Option<Section>;
+    fn build_awards() -> Option<Section>;
+    fn build_certificates() -> Option<Section>;
+    fn build_publications() -> Option<Section>;
+    fn build_skills() -> Option<Section>;
+    fn build_languages() -> Option<Section>;
+    fn build_interests() -> Option<Section>;
+    fn build_references() -> Option<Section>;
+    fn build_projects() -> Option<Section>;
+    fn build_side_projects() -> Option<Section>;
+    fn build_meta() -> Option<Section>;
 }
 
 fn main() {
