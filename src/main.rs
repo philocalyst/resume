@@ -2,7 +2,7 @@
 
 use std::collections::HashMap;
 
-use html::content::Section;
+use html::{content::Section, root::Html};
 use typst;
 
 use crate::{
@@ -13,6 +13,7 @@ use crate::{
     },
 };
 mod example;
+mod from_linkedin;
 mod json_resume;
 
 trait ToHTMLResume {
@@ -30,6 +31,30 @@ trait ToHTMLResume {
     fn build_projects(projects: Option<Vec<Project>>) -> Option<Section>;
     fn build_side_projects(projects: Option<Vec<Project>>) -> Option<Section>;
     fn build_meta(meta: Option<Meta>) -> Option<Section>;
+}
+
+impl ToHTMLResume {
+    /// Creates a full, HTML validated resume out of all of the information provided.
+    pub fn build_resume(resume: Resume) -> Html {
+        let full = Html::builder();
+
+        full.push(build_basics(resume.basics));
+        full.push(build_work(resume.work));
+        full.push(build_volunteer(resume.volunteer));
+        full.push(build_education(resume.education));
+        full.push(build_awards(resume.awards));
+        full.push(build_certificates(resume.certificates));
+        full.push(build_publications(resume.publications));
+        full.push(build_skills(resume.skills));
+        full.push(build_languages(resume.languages));
+        full.push(build_interests(resume.interests));
+        full.push(build_references(resume.references));
+        full.push(build_projects(resume.projects));
+        full.push(build_side_projects(resume.projects));
+        full.push(build_meta(resume.meta));
+
+        full.build()
+    }
 }
 
 trait ToTypstResume {
