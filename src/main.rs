@@ -29,9 +29,7 @@ trait ToHTMLResume {
     fn build_interests(interests: Option<Vec<Interest>>) -> Option<Section>;
     fn build_references(references: Option<Vec<Reference>>) -> Option<Section>;
     fn build_projects(projects: Option<Vec<Project>>) -> Option<Section>;
-    fn build_side_projects(projects: Option<Vec<Project>>) -> Option<Section>;
     fn build_meta(meta: Option<Meta>) -> Option<Section>;
-}
 
 impl ToHTMLResume {
     /// Creates a full, HTML validated resume out of all of the information provided.
