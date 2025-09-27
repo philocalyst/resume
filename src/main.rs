@@ -31,25 +31,52 @@ trait ToHTMLResume {
     fn build_projects(projects: Option<Vec<Project>>) -> Option<Section>;
     fn build_meta(meta: Option<Meta>) -> Option<Section>;
 
-impl ToHTMLResume {
     /// Creates a full, HTML validated resume out of all of the information provided.
-    pub fn build_resume(resume: Resume) -> Html {
-        let full = Html::builder();
+    /// This is a default implementation that can be overridden by implementors.
+    fn build_resume(resume: Resume) -> Html {
+        let mut full = Html::builder();
+        let mut body = html::root::Body::builder();
+        full.push(body.build());
 
-        full.push(build_basics(resume.basics));
-        full.push(build_work(resume.work));
-        full.push(build_volunteer(resume.volunteer));
-        full.push(build_education(resume.education));
-        full.push(build_awards(resume.awards));
-        full.push(build_certificates(resume.certificates));
-        full.push(build_publications(resume.publications));
-        full.push(build_skills(resume.skills));
-        full.push(build_languages(resume.languages));
-        full.push(build_interests(resume.interests));
-        full.push(build_references(resume.references));
-        full.push(build_projects(resume.projects));
-        full.push(build_side_projects(resume.projects));
-        full.push(build_meta(resume.meta));
+        if let Some(section) = Self::build_basics(resume.basics) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_work(resume.work) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_volunteer(resume.volunteer) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_education(resume.education) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_awards(resume.awards) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_certificates(resume.certificates) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_publications(resume.publications) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_skills(resume.skills) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_languages(resume.languages) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_interests(resume.interests) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_references(resume.references) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_projects(resume.projects) {
+            body.push(section);
+        }
+        if let Some(section) = Self::build_meta(resume.meta) {
+            body.push(section);
+        }
 
         full.build()
     }
