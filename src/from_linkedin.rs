@@ -1,5 +1,5 @@
 use crate::json_resume::*;
-use linkedin_api::types::*;
+use linkedin_api::types;
 use std::collections::HashMap;
 use url::Url;
 
@@ -139,27 +139,25 @@ impl linkedin_api::Experience {
     }
 }
 
-impl linkedin_api::Education {
-    /// Convert LinkedIn Education to JSON Resume Education
-    fn to_education(&self) -> crate::json_resume::Education {
-        crate::json_resume::Education {
-            institution: self.school_name.clone(),
-            url: None, // Not available in basic education
-            area: self.field_of_study.clone(),
-            study_type: self.degree.clone(),
-            start_date: None, // Not available in basic LinkedIn education struct
-            end_date: None,   // Not available in basic LinkedIn education struct
-            score: None,      // Not available in basic LinkedIn education struct
-            courses: None,    // Not available in basic LinkedIn education struct
-            additional_properties: HashMap::new(),
-        }
+/// Convert LinkedIn Education to JSON Resume Education
+fn to_jsonresume_education(education: &types::Education) -> crate::json_resume::Education {
+    crate::json_resume::Education {
+        institution: education.school_name.clone(),
+        url: None, // Not available in basic education
+        area: education.field_of_study.clone(),
+        study_type: education.degree.clone(),
+        start_date: None, // Not available in basic LinkedIn education struct
+        end_date: None,   // Not available in basic LinkedIn education struct
+        score: None,      // Not available in basic LinkedIn education struct
+        courses: None,    // Not available in basic LinkedIn education struct
+        additional_properties: HashMap::new(),
     }
 }
 
 /// Convert LinkedIn Skill to JSON Resume Skill
-fn linkedin_to_skill(input: &types::Profile) -> crate::json_resume::Skill {
+fn to_jsonresume_skill(skill: &types::Skill) -> crate::json_resume::Skill {
     crate::json_resume::Skill {
-        name: Some(input.name.clone()),
+        name: Some(skill.name.clone()),
         level: None,    // Not available in basic LinkedIn skill
         keywords: None, // Could be derived or set to skill name
         additional_properties: HashMap::new(),
