@@ -1269,9 +1269,9 @@ checksum = "0717cef1bc8b636c6e1c1bbdefc09e6322da8a9321966e8928ef80d20f7f770f"
 
 [[package]]
 name = "linkedin-api"
-version = "0.1.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "45a008b7a135e5e62974d3fcb1a06264dd88f4621cd7ca4fffb0e45cc4aff96e"
+checksum = "176a1b2a6b0a29e3ee65bcda37223bb4ee0bcda3301b3693051303ecea6c311e"
 dependencies = [
  "cookie_store 0.21.1",
  "rand",
