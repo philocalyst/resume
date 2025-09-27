@@ -60,64 +60,57 @@ impl ToJsonResume for linkedin_api::types::Profile {
     }
 }
 
-impl ToJsonResume for ContactInfo {
-    fn to_json_resume(&self) -> Resume {
-        let mut resume = Resume::new();
+fn to_jsonresume_basics(contact_info: &types::ContactInfo) -> Basics {
+    // Create basics with contact info
+    let profiles: Option<Vec<crate::json_resume::Profile>> =
+        if !contact_info.websites.is_empty() || !contact_info.twitter.is_empty() {
+            let mut profile_list = Vec::new();
 
-        // Create basics with contact info
-        let profiles: Option<Vec<crate::json_resume::Profile>> =
-            if !self.websites.is_empty() || !self.twitter.is_empty() {
-                let mut profile_list = Vec::new();
-
-                // Add websites as profiles
-                for website in &self.websites {
-                    if let Ok(url) = Url::parse(&website.url) {
-                        profile_list.push(crate::json_resume::Profile {
-                            network: website
-                                .label
-                                .clone()
-                                .or_else(|| Some("Website".to_string())),
-                            username: None,
-                            url: Some(url),
-                            additional_properties: HashMap::new(),
-                        });
-                    }
-                }
-
-                // Add Twitter profiles
-                for twitter_handle in &self.twitter {
+            // Add websites as profiles
+            for website in &contact_info.websites {
+                if let Ok(url) = Url::parse(&website.url) {
                     profile_list.push(crate::json_resume::Profile {
-                        network: Some("Twitter".to_string()),
-                        username: Some(twitter_handle.clone()),
-                        url: Url::parse(&format!("https://twitter.com/{}", twitter_handle)).ok(),
+                        network: website
+                            .label
+                            .clone()
+                            .or_else(|| Some("Website".to_string())),
+                        username: None,
+                        url: Some(url),
                         additional_properties: HashMap::new(),
                     });
                 }
+            }
 
-                if profile_list.is_empty() {
-                    None
-                } else {
-                    Some(profile_list)
-                }
-            } else {
+            // Add Twitter profiles
+            for twitter_handle in &contact_info.twitter {
+                profile_list.push(crate::json_resume::Profile {
+                    network: Some("Twitter".to_string()),
+                    username: Some(twitter_handle.clone()),
+                    url: Url::parse(&format!("https://twitter.com/{}", twitter_handle)).ok(),
+                    additional_properties: HashMap::new(),
+                });
+            }
+
+            if profile_list.is_empty() {
                 None
-            };
-
-        let basics = Basics {
-            name: None, // Not available in ContactInfo
-            label: None,
-            image: None,
-            email: self.email_address.clone(),
-            phone: self.phone_numbers.first().cloned(),
-            url: None,
-            summary: None,
-            location: None,
-            profiles,
-            additional_properties: HashMap::new(),
+            } else {
+                Some(profile_list)
+            }
+        } else {
+            None
         };
 
-        resume.basics = Some(basics);
-        resume
+    Basics {
+        name: None, // Not available in ContactInfo
+        label: None,
+        image: None,
+        email: contact_info.email_address.clone(),
+        phone: contact_info.phone_numbers.first().cloned(),
+        url: None,
+        summary: None,
+        location: None,
+        profiles,
+        additional_properties: HashMap::new(),
     }
 }
 
