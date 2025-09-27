@@ -121,21 +121,22 @@ impl ToJsonResume for ContactInfo {
     }
 }
 
-impl linkedin_api::Experience {
-    /// Convert LinkedIn Experience to JSON Resume WorkExperience
-    fn to_work_experience(&self) -> WorkExperience {
-        WorkExperience {
-            name: self.company_name.clone(),
-            location: None, // Not available in basic experience
-            description: self.description.clone(),
-            position: self.title.clone(),
-            url: None,        // Could be derived from company info if available
-            start_date: None, // Not available in basic LinkedIn experience struct
-            end_date: None,   // Not available in basic LinkedIn experience struct
-            summary: self.description.clone(),
-            highlights: self.description.as_ref().map(|desc| vec![desc.clone()]), // Simple conversion, could be enhanced
-            additional_properties: HashMap::new(),
-        }
+/// Convert LinkedIn Experience to JSON Resume WorkExperience
+fn to_jsonresume_work_experience(work_experience: &types::Experience) -> WorkExperience {
+    WorkExperience {
+        name: work_experience.company_name.clone(),
+        location: None, // Not available in basic experience
+        description: work_experience.description.clone(),
+        position: work_experience.title.clone(),
+        url: None,        // Could be derived from company info if available
+        start_date: None, // Not available in basic LinkedIn experience struct
+        end_date: None,   // Not available in basic LinkedIn experience struct
+        summary: work_experience.description.clone(),
+        highlights: work_experience
+            .description
+            .as_ref()
+            .map(|desc| vec![desc.clone()]), // Simple conversion, could be enhanced
+        additional_properties: HashMap::new(),
     }
 }
 
