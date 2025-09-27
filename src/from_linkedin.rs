@@ -12,19 +12,7 @@ impl ToJsonResume for linkedin_api::types::Profile {
     fn to_json_resume(&self) -> Resume {
         let mut resume = Resume::new();
 
-        // Convert basics section
-        let mut basics = Basics {
-            name: self.get_full_name(),
-            label: self.headline.clone(),
-            image: self.get_profile_image_url(),
-            email: None, // Not available in basic profile
-            phone: None, // Not available in basic profile
-            url: None,   // Could be constructed from public profile URL
-            summary: self.summary.clone(),
-            location: self.convert_location(),
-            profiles: None, // Could be populated with LinkedIn profile info
-            additional_properties: HashMap::new(),
-        };
+        let basics = to_jsonresume_basics(self.contact_info);
 
         // Set the basics
         resume.basics = Some(basics);
@@ -34,7 +22,7 @@ impl ToJsonResume for linkedin_api::types::Profile {
             let work_experiences: Vec<WorkExperience> = self
                 .experience
                 .iter()
-                .map(|exp| exp.to_work_experience())
+                .map(|exp| to_jsonresume_work_experience(exp))
                 .collect();
             resume.work = Some(work_experiences);
         }
@@ -44,15 +32,18 @@ impl ToJsonResume for linkedin_api::types::Profile {
             let education_entries: Vec<crate::json_resume::Education> = self
                 .education
                 .iter()
-                .map(|edu| edu.to_education())
+                .map(|edu| to_jsonresume_education(edu))
                 .collect();
             resume.education = Some(education_entries);
         }
 
         // Convert skills
         if !self.skills.is_empty() {
-            let skill_entries: Vec<crate::json_resume::Skill> =
-                self.skills.iter().map(|skill| skill.to_skill()).collect();
+            let skill_entries: Vec<crate::json_resume::Skill> = self
+                .skills
+                .iter()
+                .map(|skill| to_jsonresume_skill(skill))
+                .collect();
             resume.skills = Some(skill_entries);
         }
 
