@@ -1,5 +1,5 @@
 use crate::json_resume::*;
-use linkedin_api::*;
+use linkedin_api::types::*;
 use std::collections::HashMap;
 use url::Url;
 
@@ -156,14 +156,12 @@ impl linkedin_api::Education {
     }
 }
 
-impl linkedin_api::Skill {
-    /// Convert LinkedIn Skill to JSON Resume Skill
-    fn to_skill(&self) -> crate::json_resume::Skill {
-        crate::json_resume::Skill {
-            name: Some(self.name.clone()),
-            level: None,    // Not available in basic LinkedIn skill
-            keywords: None, // Could be derived or set to skill name
-            additional_properties: HashMap::new(),
-        }
+/// Convert LinkedIn Skill to JSON Resume Skill
+fn linkedin_to_skill(input: &types::Profile) -> crate::json_resume::Skill {
+    crate::json_resume::Skill {
+        name: Some(input.name.clone()),
+        level: None,    // Not available in basic LinkedIn skill
+        keywords: None, // Could be derived or set to skill name
+        additional_properties: HashMap::new(),
     }
 }
