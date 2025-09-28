@@ -37,7 +37,6 @@ trait ToHTMLResume {
     fn build_resume(resume: Resume) -> Html {
         let mut full = Html::builder();
         let mut body = html::root::Body::builder();
-        full.push(body.build());
 
         if let Some(section) = Self::build_basics(resume.basics) {
             body.push(section);
@@ -79,6 +78,8 @@ trait ToHTMLResume {
             body.push(section);
         }
 
+        full.push(body.build());
+
         full.build()
     }
 }
@@ -103,6 +104,8 @@ async fn main() -> Result<(), LinkedinError> {
     let profile = api.get_profile("miles-wirht-b3b675265").await?;
 
     let json_resume = profile.to_json_resume();
+
+    dbg!(&json_resume);
 
     let resume = ResumeBuilder::build_resume(json_resume);
 
