@@ -302,12 +302,13 @@ fn to_jsonresume_work_experience(experience: &types::Experience) -> WorkExperien
                         )),
                     );
                 }
-                if !company.industries.is_empty() {
+                if let Some(industries) = company.industries.clone()
+                    && !industries.is_empty()
+                {
                     props.insert(
                         "industries".to_string(),
                         serde_json::Value::Array(
-                            company
-                                .industries
+                            industries
                                 .iter()
                                 .map(|i| serde_json::Value::String(i.clone()))
                                 .collect(),
