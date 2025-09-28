@@ -7,6 +7,7 @@ use typst;
 
 use crate::{
     example::ResumeBuilder,
+    from_linkedin::ToJsonResume,
     json_resume::{
         Award, Basics, Certificate, Education, Interest, Language, Location, Meta, Project,
         Publication, Reference, Resume, Skill, VolunteerExperience, WorkExperience,
@@ -86,31 +87,26 @@ trait ToTypstResume {
     fn build_resume<'a>(resume: Resume) -> typst::syntax::ast::Markup<'a>;
 }
 
-fn main() {
-    let basics = Some(Basics {
-        name: Some("John Doe".to_string()),
-        label: Some("Software Engineer".to_string()),
-        email: Some("john@example.com".to_string()),
-        phone: Some("+1-555-0123".to_string()),
-        url: Some("https://johndoe.dev".parse().unwrap()),
-        summary: Some(
-            "Experienced software engineer with a passion for building scalable systems."
-                .to_string(),
-        ),
-        location: Some(Location {
-            city: Some("San Francisco".to_string()),
-            country_code: Some("US".to_string()),
-            address: None,
-            postal_code: None,
-            region: None,
-            additional_properties: HashMap::default(),
-        }),
-        image: None,
-        profiles: None,
-        additional_properties: HashMap::default(),
-    });
+use linkedin_api::{Linkedin, LinkedinError, types::Identity};
 
-    if let Some(basics_section) = ResumeBuilder::build_basics(basics) {
-        println!("{}", basics_section);
+#[tokio::main]
+async fn main() -> Result<(), LinkedinError> {
+    let input = Identity {
+        authentication_token: String::from(
+            "AQEDAUEPdx8FJo2CAAABmXMEsS0AAAGZlxE1LU4Aclty_bQmV4p4VWnlBVAerIOntfpKC8rMVg107RrypH6OLlgHUK0PqJ5Nssev_4lzITN-GptrMsPInTcSfuKKQwQAqJNEjhM9sWywSaYzvoobkkoc",
+        ),
+        session_cookie: String::from("ajax:8702309092900260000"),
     };
+
+    let api = Linkedin::new(&input, false).await?;
+
+    let profile = api.get_profile("miles-wirht-b3b675265").await?;
+
+    let json_resume = profile.to_json_resume();
+
+    let resume = ResumeBuilder::build_resume(json_resume);
+
+    println!("{}", resume.to_string());
+
+    Ok(())
 }
