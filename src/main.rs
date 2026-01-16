@@ -1,7 +1,7 @@
 use derive_typst_intoval::{IntoDict, IntoValue};
 use std::{collections::HashMap, fs};
 use typst::foundations::{Bytes, Dict, IntoValue};
-use typst_as_lib::TypstEngine;
+use typst_as_lib::{TypstEngine, typst_kit_options::TypstKitFontOptions};
 use url::Url;
 
 use crate::json_resume::{
@@ -22,8 +22,12 @@ fn main() {
     // with different input each time).
     let template = TypstEngine::builder()
         .main_file(TEMPLATE_FILE)
+        .search_fonts_with(
+            TypstKitFontOptions::default()
+                .include_system_fonts(false)
+                .include_embedded_fonts(true),
+        )
         .with_package_file_resolver()
-        .fonts([FONT])
         .build();
 
     // Run it
