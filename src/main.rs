@@ -3,6 +3,8 @@ use std::fs;
 use typst::foundations::{Bytes, Dict, IntoValue};
 use typst_as_lib::TypstEngine;
 
+mod json_resume;
+
 static TEMPLATE_FILE: &str = include_str!("./templates/template.typ");
 static FONT: &[u8] = include_bytes!("./fonts/texgyrecursor-regular.otf");
 static OUTPUT: &str = "./output.pdf";
