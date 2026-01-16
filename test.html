@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<style>
+  html {
+    font-family: LatinModern, "Courier New", monospace;
+    background: #fff;
+    font-size: 10px;
+  }
+
+  body {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 1.65rem;
+    margin: 0 0 3px 0;
+  }
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  p,
+  li {
+    font-size: 1.4rem;
+    line-height: 1.5rem;
+  }
+
+  .secondary {
+    color: #111;
+    font-size: 1.4rem;
+
+    p {
+      margin-bottom: 5px;
+    }
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #000;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  hr {
+    margin: 7px 0 3px 0;
+  }
+
+  /* Component-specific styles */
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-size: 3rem;
+    margin: 20px 0;
+  }
+
+  .contact-info {
+    display: flex;
+    gap: 10px 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 1.5rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .contact-item svg {
+    margin-right: 5px;
+    width: 10px;
+  }
+
+  .section {
+    margin-bottom: 20px;
+  }
+
+  .container {
+    line-height: calc(1ex / 0.32);
+  }
+
+  .item-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .item {
+    margin-bottom: 10px;
+  }
+
+  .item-title {
+    font-weight: 600;
+    font-size: 1.45rem;
+    margin-bottom: 3px;
+  }
+
+  .item-subtitle {
+    font-style: italic;
+    font-size: 1.4rem;
+    margin-bottom: 3px;
+  }
+
+  .item-date {
+    display: flex;
+    font-style: italic;
+    font-size: 1.3rem;
+  }
+
+  .item-details {
+    margin-top: 5px;
+  }
+
+  .item-details ul {
+    padding-left: 20px;
+  }
+
+  .item-details li::before {
+    content: '•';
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+    line-height: 10px;
+  }
+</style>
+
+<body>
+  <section class="header">
+    <h1>Miles Wirht</h1>
+    <p>👨‍🎓 Most-Time STUDENT 👨‍🎓 (At KSU)
+      💻 Calm Open-Source DEVELOPER 💻 (Mostly Rust)
+      😇 Hard WORKER 😇 (For myself and others... employers too!)
+      ⚡️ Infinitely ADAPTABLE ⚡️ (I grew up next to the Bermuda triangle 🔥)</p>
+    <div class="contact-info">
+      <div class="contact-item"><svg fill="none" height="18" stroke="currentColor" stroke-linecap="round"
+          stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+          <circle cx="12" cy="10" r="3" />
+        </svg>Savannah, Georgia, US</div>
+      <div class="contact-item"><svg fill="none" height="18" stroke="currentColor" stroke-linecap="round"
+          stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+          <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+        </svg><a href="https://www.linkedin.com/in/ACoAAEEPdx8B0GF5F3mhIomRigLaLPhLXX2WrAc"
+          target="_blank">https://www.linkedin.com/in/ACoAAEEPdx8B0GF5F3mhIomRigLaLPhLXX2WrAc</a></div>
+    </div>
+    <p>Land ho! 🏴‍☠️
+
+      Welcome to my glaze page... glaze as in understand I'm trying to make myself look AS GOOD AS POSSIBLE. I encourage
+      you to hold a degree of skepticism (although I'm never going to lie, just there's so much to make opaque).
+
+      If there was... an overarching life goal of mine it would be to increase the amount of choice in the world. My
+      social media handles over time have all been "Philocalyst" (Greek for lover of beauty); And that's genuinely about
+      simplicity, and admiration for things that step back and return a degree of autonomy back to us.
+
+      God save the queen.</p>
+  </section>
+  <section class="work-section">
+    <h2>Work Experience</h2>
+    <div class="work-item">
+      <h3>Freelance</h3>
+      <p class="position">Journalist</p>
+    </div>
+    <div class="work-item">
+      <h3>JEA</h3>
+      <p class="position">Camp Counselor</p>
+      <p>Helped with children and programming</p>
+    </div>
+    <div class="work-item">
+      <h3>HISTORIC SAVANNAH THEATRE</h3>
+      <p class="position">Usher</p>
+      <p>Led patrons to their seats</p>
+    </div>
+    <div class="work-item">
+      <h3>Freelance</h3>
+      <p class="position">Journalist</p>
+    </div>
+    <div class="work-item">
+      <h3>JEA</h3>
+      <p class="position">Camp Counselor</p>
+      <p>Helped with children and programming</p>
+    </div>
+    <div class="work-item">
+      <h3>HISTORIC SAVANNAH THEATRE</h3>
+      <p class="position">Usher</p>
+      <p>Led patrons to their seats</p>
+    </div>
+  </section>
+  <section class="volunteer-section">
+    <h2>Volunteer Experience</h2>
+    <div class="volunteer-item">
+      <h3>Unitarian Universalist Association</h3>
+      <p class="position">Team Lead</p>
+      <p>I helped to clean and restore two previously unused church rooms to repurpose them for youth discussion and
+        learning spaces.</p>
+    </div>
+  </section>
+  <section class="education-section">
+    <h2>Education</h2>
+    <div class="education-item">
+      <h3>Kennesaw State University Norman J. Radow College of Humanities and Social Sciences</h3>
+      <p class="degree">Bachelor of Science - BS in Political Science and Government</p>
+      <p class="score">Score: 13th</p>
+    </div>
+    <div class="education-item">
+      <h3>Savannah Arts Academy</h3>
+      <p class="degree">High School Diploma in Music</p>
+      <p class="score">Score: 11th</p>
+    </div>
+  </section>
+  <section class="awards-section">
+    <h2>Awards</h2>
+    <ul>
+      <li>Eagle Scout - Boy Scouts of America (2024-09)</li>
+      <li>Reagan Presidential Leadership Award - Reagan Foundation (2024-04)</li>
+    </ul>
+  </section>
+  <section class="certificates-section">
+    <h2>Certificates</h2>
+    <ul>
+      <li>ACT</li>
+    </ul>
+  </section>
+  <section class="skills-section">
+    <h2>Skills</h2>
+    <div class="skill-item"><span class="skill-name">Teamwork</span>
+      <p class="skill-keywords">Teamwork</p>
+    </div>
+    <div class="skill-item"><span class="skill-name">Management</span>
+      <p class="skill-keywords">Management</p>
+    </div>
+    <div class="skill-item"><span class="skill-name">Leadership</span>
+      <p class="skill-keywords">Leadership</p>
+    </div>
+    <div class="skill-item"><span class="skill-name">Problem Solving</span>
+      <p class="skill-keywords">Problem Solving</p>
+    </div>
+  </section>
+  <section class="languages-section">
+    <h2>Languages</h2>
+    <ul>
+      <li>English - Native</li>
+      <li>French - Conversational</li>
+      <li>Spanish - Conversational</li>
+    </ul>
+  </section>
+  <section class="interests-section">
+    <h2>Interests</h2>
+    <ul>
+      <li>Animal Welfare</li>
+      <li>Arts and Culture</li>
+      <li>Children</li>
+      <li>Civil Rights and Social Action</li>
+      <li>Disaster and Humanitarian Relief</li>
+      <li>Economic Empowerment</li>
+      <li>Education</li>
+      <li>Environment</li>
+      <li>Health</li>
+      <li>Human Rights</li>
+      <li>Politics</li>
+      <li>Poverty Alleviation</li>
+      <li>Science and Technology</li>
+      <li>Social Services</li>
+      <li>Veteran Support</li>
+    </ul>
+  </section>
+  <section class="meta-section">
+    <p class="version">Version: 1.0.0</p>
+    <p class="last-modified">Last Modified: 2025-09-28T01:00:53.559001+00:00</p>
+  </section>
+</body>
+
+</html>

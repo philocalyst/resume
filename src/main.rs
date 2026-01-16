@@ -1,115 +1,73 @@
-#![recursion_limit = "512"]
+use derive_typst_intoval::{IntoDict, IntoValue};
+use std::fs;
+use typst::foundations::{Bytes, Dict, IntoValue};
+use typst_as_lib::TypstEngine;
 
-use std::collections::HashMap;
+static TEMPLATE_FILE: &str = include_str!("./templates/template.typ");
+static FONT: &[u8] = include_bytes!("./fonts/texgyrecursor-regular.otf");
+static OUTPUT: &str = "./examples/output.pdf";
+static IMAGE: &[u8] = include_bytes!("./templates/images/typst.png");
 
-use html::{content::Section, root::Html};
-use typst;
+fn main() {
+    // Read in fonts and the main source file.
+    // We can use this template more than once, if needed (Possibly
+    // with different input each time).
+    let template = TypstEngine::builder()
+        .main_file(TEMPLATE_FILE)
+        .fonts([FONT])
+        .build();
 
-use crate::{
-    example::ResumeBuilder,
-    from_linkedin::ToJsonResume,
-    json_resume::{
-        Award, Basics, Certificate, Education, Interest, Language, Location, Meta, Project,
-        Publication, Reference, Resume, Skill, VolunteerExperience, WorkExperience,
-    },
-};
-mod example;
-mod from_linkedin;
-mod json_resume;
+    // Run it
+    let doc = template
+        .compile_with_input(dummy_data())
+        .output
+        .expect("typst::compile() returned an error!");
 
-trait ToHTMLResume {
-    fn build_basics(basics: Option<Basics>) -> Option<Section>;
-    fn build_work(work: Option<Vec<WorkExperience>>) -> Option<Section>;
-    fn build_volunteer(volunteer: Option<Vec<VolunteerExperience>>) -> Option<Section>;
-    fn build_education(education: Option<Vec<Education>>) -> Option<Section>;
-    fn build_awards(awards: Option<Vec<Award>>) -> Option<Section>;
-    fn build_certificates(certificates: Option<Vec<Certificate>>) -> Option<Section>;
-    fn build_publications(publications: Option<Vec<Publication>>) -> Option<Section>;
-    fn build_skills(skills: Option<Vec<Skill>>) -> Option<Section>;
-    fn build_languages(languages: Option<Vec<Language>>) -> Option<Section>;
-    fn build_interests(interests: Option<Vec<Interest>>) -> Option<Section>;
-    fn build_references(references: Option<Vec<Reference>>) -> Option<Section>;
-    fn build_projects(projects: Option<Vec<Project>>) -> Option<Section>;
-    fn build_meta(meta: Option<Meta>) -> Option<Section>;
+    // Create pdf
+    let options = Default::default();
+    let pdf = typst_pdf::pdf(&doc, &options).expect("Could not generate pdf.");
+    fs::write(OUTPUT, pdf).expect("Could not write pdf.");
+}
 
-    /// Creates a full, HTML validated resume out of all of the information provided.
-    /// This is a default implementation that can be overridden by implementors.
-    fn build_resume(resume: Resume) -> Html {
-        let mut full = Html::builder();
-        let mut body = html::root::Body::builder();
-
-        if let Some(section) = Self::build_basics(resume.basics) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_work(resume.work) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_volunteer(resume.volunteer) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_education(resume.education) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_awards(resume.awards) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_certificates(resume.certificates) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_publications(resume.publications) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_skills(resume.skills) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_languages(resume.languages) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_interests(resume.interests) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_references(resume.references) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_projects(resume.projects) {
-            body.push(section);
-        }
-        if let Some(section) = Self::build_meta(resume.meta) {
-            body.push(section);
-        }
-
-        full.push(body.build());
-
-        full.build()
+// Some dummy content. We use `derive_typst_intoval` to easily
+// create `Dict`s from structs by deriving `IntoDict`;
+fn dummy_data() -> Content {
+    Content {
+        v: vec![
+            ContentElement {
+                heading: "Foo".to_owned(),
+                text: Some("Hello World!".to_owned()),
+                num1: 1,
+                num2: Some(42),
+                image: Some(Bytes::new(IMAGE.to_vec())),
+            },
+            ContentElement {
+                heading: "Bar".to_owned(),
+                num1: 2,
+                ..Default::default()
+            },
+        ],
     }
 }
 
-trait ToTypstResume {
-    fn build_resume<'a>(resume: Resume) -> typst::syntax::ast::Markup<'a>;
+#[derive(Debug, Clone, IntoValue, IntoDict)]
+struct Content {
+    v: Vec<ContentElement>,
 }
 
-use linkedin_api::{Linkedin, LinkedinError, types::Identity};
+// Implement Into<Dict> manually, so we can just pass the struct
+// to the compile function.
+impl From<Content> for Dict {
+    fn from(value: Content) -> Self {
+        value.into_dict()
+    }
+}
 
-#[tokio::main]
-async fn main() -> Result<(), LinkedinError> {
-    let input = Identity {
-        authentication_token: String::from(
-            "AQEDAUEPdx8FJo2CAAABmXMEsS0AAAGZlxE1LU4Aclty_bQmV4p4VWnlBVAerIOntfpKC8rMVg107RrypH6OLlgHUK0PqJ5Nssev_4lzITN-GptrMsPInTcSfuKKQwQAqJNEjhM9sWywSaYzvoobkkoc",
-        ),
-        session_cookie: String::from("ajax:8702309092900260000"),
-    };
-
-    let api = Linkedin::new(&input, false).await?;
-
-    let profile = api.get_profile("miles-wirht-b3b675265").await?;
-
-    let json_resume = profile.to_json_resume();
-
-    dbg!(&json_resume);
-
-    let resume = ResumeBuilder::build_resume(json_resume);
-
-    println!("{}", resume.to_string());
-
-    Ok(())
+#[derive(Debug, Clone, Default, IntoValue, IntoDict)]
+struct ContentElement {
+    heading: String,
+    text: Option<String>,
+    num1: i32,
+    num2: Option<i32>,
+    image: Option<Bytes>,
 }
