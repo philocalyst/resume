@@ -2,7 +2,11 @@
 
 // sys.inputs.v is the native Dict from Rust
 #let data = sys.inputs
-#set text(font: "New Computer Modern", 11pt)
+#set text(font: "Inter 18pt", 11pt)
+#show heading: set text(font: "Source Serif 4", weight: "bold")
+#show heading.where(level: 2): set block(above: 2em)
+#show math.equation: set text(font: "STIX Two Math")
+#show raw: set text(font: "JetBrains Mono")
 
 #let basics = data.at("basics", default: (:))
 #let profiles = basics.at("profiles", default: ())
