@@ -1,136 +1,97 @@
-use std::{collections::HashMap, fs};
-use typst_bake;
-use url::Url;
-
-use crate::json_resume::{
-    Basics, Certificate, Education, Interest, Language, Location, Meta, Profile, Project, Resume,
-    Skill, WorkExperience,
-};
+use anyhow::{Context, Result};
+use clap::{Parser, Subcommand, ValueEnum};
+use std::fs;
+use std::path::PathBuf;
 
 mod json_resume;
+use crate::json_resume::Resume;
 
-static OUTPUT: &str = "./output.pdf";
-
-fn main() {
-    let source_document = typst_bake::document!("template.typ").with_inputs(get_dummy_resume());
-
-    // Run it
-    let doc = source_document.to_pdf().unwrap();
-
-    // Create pdf
-    fs::write(OUTPUT, doc).expect("Could not write pdf.");
+#[derive(Parser)]
+#[command(name = "resume-bakery")]
+#[command(about = "A CLI to bake JSON resumes into PDFs using Typst", long_about = None)]
+struct Cli {
+    #[command(subcommand)]
+    command: Commands,
 }
 
-pub fn get_dummy_resume() -> Resume {
-    Resume {
-        schema: Some(
-            Url::parse(
-                "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
-            )
-            .unwrap(),
-        ),
-        basics: Some(Basics {
-            name: Some("Jane Doe".to_string()),
-            label: Some("Systems Architect".to_string()),
-            image: Some(Url::parse("https://example.com/avatar.png").unwrap()),
-            email: Some("jane.doe@example.com".to_string()),
-            phone: Some("+1-555-0199".to_string()),
-            url: Some(Url::parse("https://janedoe.dev").unwrap()),
-            summary: Some(
-                "Experienced engineer focused on memory safety and distributed systems."
-                    .to_string(),
-            ),
-            location: Some(Location {
-                address: Some("123 Rust Lane".to_string()),
-                postal_code: Some("10001".to_string()),
-                city: Some("New York".to_string()),
-                country_code: Some("US".to_string()),
-                region: Some("NY".to_string()),
-                additional_properties: HashMap::new(),
-            }),
-            profiles: Some(vec![Profile {
-                network: Some("GitHub".to_string()),
-                username: Some("janedoe".to_string()),
-                url: Some(Url::parse("https://github.com/janedoe").unwrap()),
-                additional_properties: HashMap::new(),
-            }]),
-            additional_properties: HashMap::new(),
-        }),
-        work: Some(vec![WorkExperience {
-            name: Some("Tech Solutions Inc.".to_string()),
-            location: Some("San Francisco, CA".to_string()),
-            description: Some("Cloud Infrastructure Provider".to_string()),
-            position: Some("Senior Backend Engineer".to_string()),
-            url: Some(Url::parse("https://techsolutions.com").unwrap()),
-            start_date: Some("2021-03-01".to_string()),
-            end_date: None, // Current position
-            summary: Some("Leading the migration of legacy services to Rust.".to_string()),
-            highlights: Some(vec![
-                "Reduced p99 latency by 40%".to_string(),
-                "Architected a zero-trust auth system".to_string(),
-            ]),
-            additional_properties: HashMap::new(),
-        }]),
-        volunteer: None,
-        education: Some(vec![Education {
-            institution: Some("University of Technology".to_string()),
-            url: Some(Url::parse("https://unitech.edu").unwrap()),
-            area: Some("Computer Science".to_string()),
-            study_type: Some("Bachelor".to_string()),
-            start_date: Some("2014-09".to_string()),
-            end_date: Some("2018-05".to_string()),
-            score: Some("3.9".to_string()),
-            courses: Some(vec![
-                "Distributed Systems".to_string(),
-                "Compilers".to_string(),
-            ]),
-            additional_properties: HashMap::new(),
-        }]),
-        awards: None,
-        certificates: Some(vec![Certificate {
-            name: Some("AWS Certified Solutions Architect".to_string()),
-            date: Some("2022-06-15".to_string()),
-            url: Some(Url::parse("https://aws.amazon.com/verification").unwrap()),
-            issuer: Some("Amazon Web Services".to_string()),
-            additional_properties: HashMap::new(),
-        }]),
-        publications: None,
-        skills: Some(vec![Skill {
-            name: Some("Programming Languages".to_string()),
-            level: Some("Expert".to_string()),
-            keywords: Some(vec!["Rust".into(), "C++".into(), "Go".into()]),
-            additional_properties: HashMap::new(),
-        }]),
-        languages: Some(vec![Language {
-            language: Some("English".to_string()),
-            fluency: Some("Native".to_string()),
-            additional_properties: HashMap::new(),
-        }]),
-        interests: Some(vec![Interest {
-            name: Some("Open Source".to_string()),
-            keywords: Some(vec!["Linux Kernel".into(), "WebAssembly".into()]),
-            additional_properties: HashMap::new(),
-        }]),
-        references: None,
-        projects: Some(vec![Project {
-            name: Some("Custom Hypervisor".to_string()),
-            description: Some("A lightweight hypervisor written in Rust.".to_string()),
-            highlights: Some(vec!["Supports KVM backend".to_string()]),
-            keywords: Some(vec!["Virtualization".into(), "Low-level".into()]),
-            start_date: Some("2022-01".to_string()),
-            end_date: None,
-            url: None,
-            roles: Some(vec!["Lead Developer".to_string()]),
-            entity: None,
-            project_type: Some("Personal".to_string()),
-            additional_properties: HashMap::new(),
-        }]),
-        meta: Some(Meta {
-            canonical: None,
-            version: Some("v1.0.0".to_string()),
-            last_modified: Some("2026-01-15T20:00:00Z".to_string()),
-            additional_properties: HashMap::new(),
-        }),
-        additional_properties: HashMap::new(),
+#[derive(Subcommand)]
+enum Commands {
+    /// Initialize a new resume.json file
+    Init {
+        #[arg(short, long, default_value = "resume.json")]
+        output: PathBuf,
+    },
+    /// Validate the resume.json against the internal schema
+    Validate {
+        #[arg(short, long, default_value = "resume.json")]
+        input: PathBuf,
+    },
+    /// Export the resume to a specific format
+    Export {
+        /// Path to the resume.json file
+        #[arg(short, long, default_value = "resume.json")]
+        input: PathBuf,
+
+        /// Path for the output file
+        #[arg(short, long, default_value = "output.pdf")]
+        output: PathBuf,
+
+        /// The typst template to use
+        #[arg(short, long, default_value = "template.typ")]
+        template: String,
+
+        /// Output format
+        #[arg(short, long, value_enum, default_value_t = Format::Pdf)]
+        format: Format,
+    },
+}
+
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ValueEnum)]
+enum Format {
+    Pdf,
+}
+
+fn main() -> Result<()> {
+    let cli = Cli::parse();
+
+    match cli.command {
+        Commands::Init { output } => {
+            let default_resume = serde_json::to_string_pretty(&Resume::default())?;
+            fs::write(&output, default_resume)
+                .with_context(|| format!("Failed to create {:?}", output))?;
+            println!("Initialized new resume at {:?}", output);
+        }
+        Commands::Validate { input } => {
+            let data = fs::read_to_string(&input)
+                .with_context(|| format!("Could not read {:?}", input))?;
+            let _: Resume = serde_json::from_str(&data)
+                .with_context(|| "Validation failed: JSON does not match Resume schema")?;
+            println!("{:?}: Valid.", input);
+        }
+        Commands::Export {
+            input,
+            output,
+            template,
+            format: _,
+        } => {
+            // Read and parse
+            let data = fs::read_to_string(&input)
+                .with_context(|| format!("Could not read {:?}", input))?;
+            let resume: Resume =
+                serde_json::from_str(&data).with_context(|| "Failed to parse resume JSON")?;
+
+            // Bake with Typst
+            let source_document = typst_bake::document!("template.typ").with_inputs(resume);
+
+            println!("Baking resume using template: {}...", template);
+            let doc = source_document
+                .to_pdf()
+                .map_err(|e| anyhow::anyhow!("Typst rendering error: {:?}", e))?;
+            fs::write(&output, doc)
+                .with_context(|| format!("Failed to write PDF to {:?}", output))?;
+            println!("Success! Resume exported to {:?}", output);
+        }
     }
+
+    Ok(())
 }
