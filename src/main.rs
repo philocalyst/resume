@@ -1,7 +1,5 @@
-use derive_typst_intoval::{IntoDict, IntoValue};
 use std::{collections::HashMap, fs};
-use typst::foundations::{Bytes, Dict, IntoValue};
-use typst_as_lib::{TypstEngine, typst_kit_options::TypstKitFontOptions};
+use typst_bake;
 use url::Url;
 
 use crate::json_resume::{
@@ -11,35 +9,16 @@ use crate::json_resume::{
 
 mod json_resume;
 
-static TEMPLATE_FILE: &str = include_str!("./templates/template.typ");
-static FONT: &[u8] = include_bytes!("./fonts/texgyrecursor-regular.otf");
 static OUTPUT: &str = "./output.pdf";
-static IMAGE: &[u8] = include_bytes!("./templates/images/typst.png");
 
 fn main() {
-    // Read in fonts and the main source file.
-    // We can use this template more than once, if needed (Possibly
-    // with different input each time).
-    let template = TypstEngine::builder()
-        .main_file(TEMPLATE_FILE)
-        .search_fonts_with(
-            TypstKitFontOptions::default()
-                .include_system_fonts(false)
-                .include_embedded_fonts(true),
-        )
-        .with_package_file_resolver()
-        .build();
+    let source_document = typst_bake::document!("template.typ").with_inputs(get_dummy_resume());
 
     // Run it
-    let doc = template
-        .compile_with_input(get_dummy_resume())
-        .output
-        .expect("typst::compile() returned an error!");
+    let doc = source_document.to_pdf().unwrap();
 
     // Create pdf
-    let options = Default::default();
-    let pdf = typst_pdf::pdf(&doc, &options).expect("Could not generate pdf.");
-    fs::write(OUTPUT, pdf).expect("Could not write pdf.");
+    fs::write(OUTPUT, doc).expect("Could not write pdf.");
 }
 
 pub fn get_dummy_resume() -> Resume {
