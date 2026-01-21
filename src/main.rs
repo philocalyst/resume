@@ -53,6 +53,18 @@ enum Format {
     Pdf,
 }
 
+macro_rules! bake_doc {
+    ($variant:expr, $inputs:expr, { $($arm:ident => $file:literal),* $(,)? }) => {
+        match $variant {
+            $(
+                Available::$arm => {
+                    typst_bake::document!($file).with_inputs($inputs)
+                }
+            )*
+        }
+    };
+}
+
 fn main() -> Result<()> {
     let cli = Cli::parse();
 
@@ -83,9 +95,10 @@ fn main() -> Result<()> {
                 serde_json::from_str(&data).with_context(|| "Failed to parse resume JSON")?;
 
             // Bake with Typst
-            let source_document = match template {
-                Available::Basic => typst_bake::document!("template.typ").with_inputs(resume),
-            };
+            let source_document = bake_doc!(template, resume, {
+                Basic => "template.typ",
+                // Modern => "modern.typ",
+            });
 
             println!("Baking resume using template: {}...", template);
             let doc = source_document
