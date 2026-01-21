@@ -4,7 +4,9 @@ use std::fs;
 use std::path::PathBuf;
 
 mod json_resume;
+mod resumes;
 use crate::json_resume::Resume;
+use crate::resumes::Available;
 
 #[derive(Parser)]
 #[command(name = "resume-bakery")]
@@ -37,8 +39,8 @@ enum Commands {
         output: PathBuf,
 
         /// The typst template to use
-        #[arg(short, long, default_value = "template.typ")]
-        template: String,
+        #[arg(short, long)]
+        template: Available,
 
         /// Output format
         #[arg(short, long, value_enum, default_value_t = Format::Pdf)]
@@ -81,7 +83,9 @@ fn main() -> Result<()> {
                 serde_json::from_str(&data).with_context(|| "Failed to parse resume JSON")?;
 
             // Bake with Typst
-            let source_document = typst_bake::document!("template.typ").with_inputs(resume);
+            let source_document = match template {
+                Available::Basic => typst_bake::document!("template.typ").with_inputs(resume),
+            };
 
             println!("Baking resume using template: {}...", template);
             let doc = source_document
