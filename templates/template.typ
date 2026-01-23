@@ -114,14 +114,12 @@
 // --- Render the resume using the custom template ---
 #show: resume.with(
   json-resume,
-  accent-color: "#26428b",
+  accent-color: rgb("#5E81AC"),
   font: "New Computer Modern",
   paper: "us-letter",
   author-font-size: 20pt,
   font-size: 10pt,
   lang: "en",
-  author-position: left,
-  personal-info-position: left,
 )
 
 // Render all sections

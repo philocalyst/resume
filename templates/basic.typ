@@ -195,21 +195,286 @@
     #left #h(1fr) #right
   ]
 }
+// ============================================================================
+// Section: Projects
+// ============================================================================
+
+#let render-projects(project-items) = {
+  if project-items == none or project-items.len() == 0 { return }
+
+  [== Projects]
+
+  for item in project-items {
+    block(above: 1.2em, below: 0em)[
+      #grid(
+        columns: (auto, 1fr, auto),
+        align: (left, center, right),
+        gutter: 0.5em,
+
+        text(weight: 300, size: 10.5pt)[*#item.name*],
+        line(length: 100%, stroke: 0.5pt + rgb("#D8DEE9")),
+        text(size: 9pt, fill: rgb("#4C566A"))[
+          #{
+            let start = if item.startDate != none { item.startDate } else { "" }
+            let end = if item.endDate != none { item.endDate } else { "Present" }
+            if start != "" { start + " — " + end }
+          }
+        ]
+      )
+    ]
+
+    // Website / URL
+    if item.url != none {
+      align(right)[
+        #text(size: 9pt)[#link(item.url)[#item.url]]
+      ]
+      v(-0.4em)
+    }
+
+    // Description
+    if item.description != none {
+      v(0.3em)
+      par[#item.description]
+    }
+
+    // Highlights
+    if item.highlights != none and item.highlights.len() > 0 {
+      v(0.3em)
+      par[*Highlights*]
+      for highlight in item.highlights {
+        pad(left: 1em)[
+          #box(width: 0.8em)[#text(fill: rgb("#000000").lighten(90%), size: 9pt)[▲]]
+          #h(0.2em)#highlight
+        ]
+      }
+    }
+  }
+}
 
 // ============================================================================
-// Main Resume Template
+// Section: Volunteer
+// ============================================================================
+
+#let render-volunteer(volunteer-items) = {
+  if volunteer-items == none or volunteer-items.len() == 0 { return }
+
+  [== Volunteer]
+
+  for item in volunteer-items {
+    block(above: 1.2em, below: 0em)[
+      #grid(
+        columns: (auto, 1fr, auto),
+        align: (left, center, right),
+        gutter: 0.5em,
+
+        text(weight: 300, size: 10.5pt)[*#item.organization*],
+        line(length: 100%, stroke: 0.5pt + rgb("#D8DEE9")),
+        text(size: 9pt, fill: rgb("#4C566A"))[
+          #{
+            let start = if item.startDate != none { item.startDate } else { "" }
+            let end = if item.endDate != none { item.endDate } else { "Present" }
+            if start != "" { start + " — " + end }
+          }
+        ]
+      )
+    ]
+
+    // Website
+    if item.url != none {
+      align(right)[
+        #text(size: 9pt)[#link(item.url)[#item.url]]
+      ]
+      v(-0.4em)
+    }
+
+    // Position
+    if item.position != none {
+      text(fill: rgb("#5E81AC"), weight: 400, size: 10pt)[#item.position]
+    }
+
+    // Summary
+    if item.summary != none {
+      v(0.3em)
+      par[#item.summary]
+    }
+
+    // Highlights
+    if item.highlights != none and item.highlights.len() > 0 {
+      v(0.3em)
+      par[*Highlights*]
+      for highlight in item.highlights {
+        pad(left: 1em)[
+          #box(width: 0.8em)[#text(fill: rgb("#000000").lighten(90%), size: 9pt)[▲]]
+          #h(0.2em)#highlight
+        ]
+      }
+    }
+  }
+}
+
+// ============================================================================
+// Section: Awards
+// ============================================================================
+
+#let render-awards(award-items) = {
+  if award-items == none or award-items.len() == 0 { return }
+
+  [== Awards]
+
+  for item in award-items {
+    block(above: 1.2em, below: 0em)[
+      #grid(
+        columns: (auto, 1fr, auto),
+        align: (left, center, right),
+        gutter: 0.5em,
+
+        text(weight: 300, size: 10.5pt)[*#item.title*],
+        line(length: 100%, stroke: 0.5pt + rgb("#D8DEE9")),
+        text(size: 9pt, fill: rgb("#4C566A"))[#if item.date != none { item.date }]
+      )
+    ]
+
+    if item.awarder != none {
+      text(fill: rgb("#5E81AC"), weight: 400, size: 10pt)[#item.awarder]
+    }
+
+    if item.summary != none {
+      v(0.3em)
+      par[#item.summary]
+    }
+  }
+}
+
+// ============================================================================
+// Section: Publications
+// ============================================================================
+
+#let render-publications(pub-items) = {
+  if pub-items == none or pub-items.len() == 0 { return }
+
+  [== Publications]
+
+  for item in pub-items {
+    block(above: 1.2em, below: 0em)[
+      #grid(
+        columns: (auto, 1fr, auto),
+        align: (left, center, right),
+        gutter: 0.5em,
+
+        text(weight: 300, size: 10.5pt)[*#item.name*],
+        line(length: 100%, stroke: 0.5pt + rgb("#D8DEE9")),
+        text(size: 9pt, fill: rgb("#4C566A"))[#if item.releaseDate != none { item.releaseDate }]
+      )
+    ]
+
+    if item.publisher != none {
+      text(fill: rgb("#5E81AC"), weight: 400, size: 10pt)[#item.publisher]
+    }
+
+    if item.url != none {
+       h(0.5em)
+       text(size: 9pt)[#link(item.url)[Link]]
+    }
+
+    if item.summary != none {
+      v(0.3em)
+      par[#item.summary]
+    }
+  }
+}
+
+// ============================================================================
+// Section: Languages
+// ============================================================================
+
+#let render-languages(lang-items) = {
+  if lang-items == none or lang-items.len() == 0 { return }
+
+  [== Languages]
+
+  let items = ()
+  for item in lang-items {
+    items.push([
+      *#item.language* #if item.fluency != none { text(fill: rgb("#4C566A"), size: 0.9em)[— #item.fluency] }
+    ])
+  }
+
+  grid(
+    columns: (1fr, 1fr),
+    row-gutter: 0.6em,
+    column-gutter: 1em,
+    ..items
+  )
+}
+
+// ============================================================================
+// Section: Interests
+// ============================================================================
+
+#let render-interests(interest-items) = {
+  if interest-items == none or interest-items.len() == 0 { return }
+
+  [== Interests]
+
+  let items = ()
+  for item in interest-items {
+    items.push([
+      === #item.name
+      #if item.keywords != none and item.keywords.len() > 0 {
+        for keyword in item.keywords {
+          pad(left: 1em)[
+            #box(width: 0.8em)[#text(fill: rgb("#000000").lighten(90%), size: 9pt)[▲]]
+            #h(0.2em)#keyword
+          ]
+        }
+      }
+    ])
+  }
+
+  grid(
+    columns: (1fr, 1fr),
+    row-gutter: 0.8em,
+    column-gutter: 1em,
+    ..items
+  )
+}
+
+// ============================================================================
+// Section: References
+// ============================================================================
+
+#let render-references(ref-items) = {
+  if ref-items == none or ref-items.len() == 0 { return }
+
+  [== References]
+
+  for item in ref-items {
+    block(above: 1.2em, below: 0em)[
+       text(weight: 300, size: 10.5pt)[*#item.name*]
+    ]
+    if item.reference != none {
+      v(0.3em)
+      par[#item.reference]
+    }
+  }
+}
+
+// ============================================================================
+// Nordic-inspired Resume Template (matching HTML/CSS theme)
 // ============================================================================
 
 #let resume(
   json-resume,
-  accent-color: "#000000",
-  font: "New Computer Modern",
+  accent-color: rgb("#5E81AC"),
+  secondary-color: rgb("#81A1C1"),
+  text-color: rgb("#2E3440"),
+  muted-color: rgb("#4C566A"),
+  background: rgb("#ECEFF4"),
+  font: "Lato",
   paper: "us-letter",
-  author-font-size: 20pt,
-  font-size: 10pt,
+  author-font-size: 28pt,
+  font-size: 10.5pt,
   lang: "en",
-  author-position: left,
-  personal-info-position: left,
   body,
 ) = {
   
@@ -220,127 +485,274 @@
     "Resume"
   }
   
-  // Sets document metadata
   set document(author: display-name, title: display-name)
   
-  // Document-wide formatting
   set text(
     font: font,
     size: font-size,
     lang: lang,
-    ligatures: false
+    fill: text-color,
+    weight: 300,
   )
   
   set page(
-    margin: (0.5in),
+    margin: (top: 0.75in, bottom: 0.75in, left: 0.75in, right: 0.75in),
     paper: paper,
+    fill: background,
   )
   
-  show link: underline
-  
-  // Section titles
-  show heading.where(level: 2): it => [
-    #pad(top: 0pt, bottom: -10pt, [#smallcaps(it.body)])
-    #line(length: 100%, stroke: 1pt)
-  ]
-  
-  // Accent color styling
-  show heading: set text(fill: rgb(accent-color))
-  show link: set text(fill: rgb(accent-color))
-  
-  // Name styling
-  show heading.where(level: 1): it => [
-    #set align(author-position)
-    #set text(weight: 700, size: author-font-size)
-    #pad(it.body)
-  ]
-  
-  // Display name
-  [= #display-name]
-  
-  // Build contact info from JSON Resume
-  pad(
-    top: 0.25em,
-    align(personal-info-position)[
-      #{
-        let items = ()
-        
-        if basics != none {
-          if basics.label != none { items.push(basics.label) }
-          if basics.phone != none { items.push(basics.phone) }
-          if basics.location != none {
-            let loc = format-location(basics.location)
-            if loc != "" { items.push(loc) }
-          }
-          if basics.email != none {
-            items.push(link("mailto:" + basics.email)[#basics.email])
-          }
-          if basics.url != none {
-            items.push(link(basics.url)[#basics.url])
-          }
-          
-          // Add profiles
-          if basics.profiles != none {
-            for profile in basics.profiles {
-              if profile.url != none {
-                let display = if profile.network != none {
-                  profile.network + if profile.username != none { ": " + profile.username } else { "" }
-                } else if profile.username != none {
-                  profile.username
-                } else {
-                  profile.url
-                }
-                items.push(link(profile.url)[#display])
-              }
-            }
-          }
-        }
-        
-        items.filter(x => x != none).join("  |  ")
-      }
-    ],
+  set par(
+    justify: true,
+    leading: 0.65em,
   )
   
-  // Display summary if present
-  if basics != none and basics.summary != none {
-    pad(top: 0.5em, bottom: 0.5em)[
-      #basics.summary
-    ]
+  // Link styling - underlined with decorative color
+  show link: it => {
+    set text(fill: accent-color, weight: 500)
+    underline(it, stroke: 1.5pt + rgb("#D8DEE9"), offset: 2pt)
   }
   
-  set par(justify: true)
+  // Strong text styling
+  show strong: it => {
+    set text(fill: muted-color, weight: 400, size: 0.95em)
+    it
+  }
+  
+  // Emphasis styling
+  show emph: it => {
+    set text(fill: muted-color, weight: 300, style: "normal")
+    it
+  }
+  
+  // Section headings (level 2)
+  show heading.where(level: 2): it => {
+    set text(fill: secondary-color, size: 18pt, weight: 300)
+    block(above: 1.5em, below: 0.8em, it.body)
+  }
+  
+  // Name (level 1)
+  show heading.where(level: 1): it => {
+    set text(weight: 300, size: author-font-size, fill: text-color)
+    block(above: 0em, below: 0.3em, it.body)
+  }
+  
+  // Header with name and title
+  pad(top: 2em, bottom: 1.5em)[
+    #grid(
+      columns: (auto, 1fr),
+      gutter: 1.5em,
+      align: (center, left),
+      
+      // Profile image placeholder (circular)
+      if basics != none and basics.image != none {
+        box(
+          width: 88pt,
+          height: 88pt,
+          radius: 50%,
+          clip: true,
+          fill: rgb("#D8DEE9"),
+        )[
+          #align(center + horizon)[
+            #text(fill: muted-color, size: 8pt)[Profile]
+          ]
+        ]
+      } else {
+        box(
+          width: 88pt,
+          height: 88pt,
+          radius: 50%,
+          fill: rgb("#D8DEE9"),
+        )[
+          #align(center + horizon)[
+            #text(fill: muted-color, size: 8pt)[Profile]
+          ]
+        ]
+      },
+      
+      // Name and label
+      align(left + horizon)[
+        = #display-name
+        #if basics != none and basics.label != none {
+          text(size: 16pt, fill: muted-color)[#basics.label]
+        }
+      ]
+    )
+  ]
   
   body
 }
 
 // ============================================================================
-// Section Rendering Functions
+// Section: Contact
+// ============================================================================
+
+#let render-contact(basics) = {
+  if basics == none { return }
+  
+  [== Contact]
+  
+  grid(
+    columns: (1fr, 1fr),
+    row-gutter: 0.6em,
+    column-gutter: 1em,
+    
+    if basics.email != none {
+      [
+        *Email*\
+        #link("mailto:" + basics.email)[#basics.email]
+      ]
+    },
+    
+    if basics.phone != none {
+      [
+        *Phone*\
+        #basics.phone
+      ]
+    },
+    
+    if basics.url != none {
+      [
+        *Website*\
+        #link(basics.url)[#basics.url]
+      ]
+    },
+  )
+}
+
+// ============================================================================
+// Section: About
+// ============================================================================
+
+#let render-about(basics) = {
+  if basics == none or basics.summary == none { return }
+  
+  [== About]
+  
+  par(justify: true)[#basics.summary]
+}
+
+// ============================================================================
+// Section: Profiles
+// ============================================================================
+
+#let render-profiles(profiles) = {
+  if profiles == none or profiles.len() == 0 { return }
+  
+  [== Profiles]
+  
+  let items = ()
+  for profile in profiles {
+    if profile.network != none or profile.url != none {
+      items.push([
+        *#upper(profile.network.at(0) + profile.network.slice(1))*\
+        #link(profile.url)[#{if profile.username != none { profile.username } else { profile.url }}]
+      ])
+    }
+  }
+  
+  grid(
+    columns: (1fr, 1fr),
+    row-gutter: 0.6em,
+    column-gutter: 1em,
+    ..items
+  )
+}
+
+// ============================================================================
+// Section: Work Experience
 // ============================================================================
 
 #let render-work(work-items) = {
   if work-items == none or work-items.len() == 0 { return }
   
-  [== Experience]
+  [== Work]
   
   for item in work-items {
-    generic-two-by-two(
-      top-left: strong(if item.position != none { item.position } else { "" }),
-      top-right: format-date-range(item.startDate, item.endDate),
-      bottom-left: if item.name != none { item.name } else { "" },
-      bottom-right: emph(if item.url != none { item.url } else { "" }),
-    )
+    block(above: 1.2em, below: 0em)[
+      // Company name with date range (strike-through effect)
+      #grid(
+        columns: (auto, 1fr, auto),
+        align: (left, center, right),
+        gutter: 0.5em,
+        
+        text(weight: 300, size: 10.5pt)[*#item.name*],
+        line(length: 100%, stroke: 0.5pt + rgb("#D8DEE9")),
+        text(size: 9pt, fill: rgb("#4C566A"))[
+          #{
+            let start = if item.startDate != none { item.startDate } else { "" }
+            let end = if item.endDate != none { item.endDate } else { "Now" }
+            if start != "" { start + " — " + end }
+          }
+        ]
+      )
+    ]
     
+    // Website
+    if item.url != none {
+      align(right)[
+        #text(size: 9pt)[#link(item.url)[#item.url]]
+      ]
+      v(-0.4em)
+    }
+    
+    // Position
+    text(fill: rgb("#5E81AC"), weight: 400, size: 10pt)[#item.position]
+    
+    // Summary
     if item.summary != none {
+      v(0.3em)
       par[#item.summary]
     }
     
+    // Highlights
     if item.highlights != none and item.highlights.len() > 0 {
-      list(..item.highlights)
+      v(0.3em)
+      par[*Highlights*]
+      for highlight in item.highlights {
+        pad(left: 1em)[
+          #box(width: 0.8em)[#text(fill: rgb("#000000").lighten(90%), size: 9pt)[▲]]
+          #h(0.2em)#highlight
+        ]
+      }
     }
-    
-    v(0.5em)
   }
 }
+
+// ============================================================================
+// Section: Skills
+// ============================================================================
+
+#let render-skills(skill-items) = {
+  if skill-items == none or skill-items.len() == 0 { return }
+  
+  [== Skills]
+  
+  let items = ()
+  for item in skill-items {
+    items.push([
+      === #item.name
+      #if item.keywords != none and item.keywords.len() > 0 {
+        for keyword in item.keywords {
+          pad(left: 1em)[
+            #box(width: 0.8em)[#text(fill: rgb("#000000").lighten(90%), size: 9pt)[▲]]
+            #h(0.2em)#keyword
+          ]
+        }
+      }
+    ])
+  }
+  
+  grid(
+    columns: (1fr, 1fr),
+    row-gutter: 0.8em,
+    column-gutter: 1em,
+    ..items
+  )
+}
+
+// ============================================================================
+// Section: Education
+// ============================================================================
 
 #let render-education(edu-items) = {
   if edu-items == none or edu-items.len() == 0 { return }
@@ -348,204 +760,74 @@
   [== Education]
   
   for item in edu-items {
-    let degree = if item.studyType != none and item.area != none {
-      item.studyType + " in " + item.area
-    } else if item.studyType != none {
-      item.studyType
-    } else if item.area != none {
-      item.area
-    } else { "" }
+    block(above: 1.2em, below: 0em)[
+      #grid(
+        columns: (auto, 1fr, auto),
+        align: (left, center, right),
+        gutter: 0.5em,
+        
+        text(weight: 300, size: 10.5pt)[*#item.institution*],
+        line(length: 100%, stroke: 0.5pt + rgb("#D8DEE9")),
+        text(size: 9pt, fill: rgb("#4C566A"))[
+          #{
+            let start = if item.startDate != none { item.startDate } else { "" }
+            let end = if item.endDate != none { item.endDate } else { "Now" }
+            if start != "" { start + " — " + end }
+          }
+        ]
+      )
+    ]
     
-    generic-two-by-two(
-      top-left: strong(if item.institution != none { item.institution } else { "" }),
-      top-right: format-date-range(item.startDate, item.endDate),
-      bottom-left: emph(degree),
-      bottom-right: if item.score != none { emph("GPA: " + item.score) } else { "" },
-    )
+    // Area with icon
+    text(weight: 400)[#text(font: "Octicons", size: 11pt)[▼] #h(0.3em)#item.area]
     
+    // Study type and GPA
+    pad(left: 1.8em)[
+      #{item.studyType}#{if item.score != none { [ (#item.score)] }}
+    ]
+    
+    // Courses
     if item.courses != none and item.courses.len() > 0 {
-      par[Courses: #item.courses.join(", ")]
+      v(0.5em)
+      text(weight: 400, size: 9.5pt)[Courses]
+      for course in item.courses {
+        pad(left: 1em)[
+          #box(width: 0.8em)[#text(fill: rgb("#000000").lighten(90%), size: 9pt)[▲]]
+          #h(0.2em)#course
+        ]
+      }
     }
-    
-    v(0.5em)
   }
 }
 
-#let render-projects(project-items) = {
-  if project-items == none or project-items.len() == 0 { return }
-  
-  [== Projects]
-  
-  for item in project-items {
-    let roles-str = if item.roles != none {
-      item.roles.join(", ")
-    } else { "" }
-    
-    generic-one-by-two(
-      left: {
-        [*#{if item.name != none { item.name } else { "" }}*]
-        if roles-str != "" [ (#roles-str)]
-        if item.url != none [ (#link(item.url)[#item.url])]
-      },
-      right: format-date-range(item.startDate, item.endDate),
-    )
-    
-    if item.description != none {
-      par[#item.description]
-    }
-    
-    if item.highlights != none and item.highlights.len() > 0 {
-      list(..item.highlights)
-    }
-    
-    v(0.5em)
-  }
-}
-
-#let render-skills(skill-items) = {
-  if skill-items == none or skill-items.len() == 0 { return }
-  
-  [== Skills]
-  
-  for item in skill-items {
-    let keywords-str = if item.keywords != none {
-      item.keywords.join(", ")
-    } else { "" }
-    
-    [*#{if item.name != none { item.name } else { "" }}*: #keywords-str]
-    
-    v(0.3em)
-  }
-}
+// ============================================================================
+// Section: Certifications
+// ============================================================================
 
 #let render-certificates(cert-items) = {
   if cert-items == none or cert-items.len() == 0 { return }
   
-  [== Certificates]
+  [== Certifications]
   
   for item in cert-items {
-    [
-      *#{if item.name != none { item.name } else { "" }}*, #{if item.issuer != none { item.issuer } else { "" }}
-      #if item.url != none {
-        [ (#link(item.url)[#item.url])]
-      }
-      #h(1fr) #{if item.date != none { item.date } else { "" }}
+    block(above: 1.2em, below: 0em)[
+      #grid(
+        columns: (auto, 1fr, auto),
+        align: (left, center, right),
+        gutter: 0.5em,
+        
+        text(weight: 300, size: 10.5pt)[*#item.name*],
+        line(length: 100%, stroke: 0.5pt + rgb("#D8DEE9")),
+        text(size: 9pt, fill: rgb("#4C566A"))[#item.date]
+      )
     ]
     
-    v(0.3em)
-  }
-}
-
-#let render-awards(award-items) = {
-  if award-items == none or award-items.len() == 0 { return }
-  
-  [== Awards]
-  
-  for item in award-items {
-    generic-one-by-two(
-      left: [*#{if item.title != none { item.title } else { "" }}*],
-      right: if item.date != none { item.date } else { "" },
-    )
+    [_by_ *#item.issuer*]
     
-    if item.awarder != none {
-      par[Awarded by: #item.awarder]
+    if item.url != none {
+      v(0.3em)
+      [_Credential ID_ #link(item.url)[#item.url]]
     }
-    
-    if item.summary != none {
-      par[#item.summary]
-    }
-    
-    v(0.5em)
-  }
-}
-
-#let render-publications(pub-items) = {
-  if pub-items == none or pub-items.len() == 0 { return }
-  
-  [== Publications]
-  
-  for item in pub-items {
-    [
-      *#{if item.name != none { item.name } else { "" }}*
-      #if item.publisher != none [ — #item.publisher]
-      #if item.url != none [ (#link(item.url)[link])]
-      #h(1fr) #{if item.releaseDate != none { item.releaseDate } else { "" }}
-    ]
-    
-    if item.summary != none {
-      par[#item.summary]
-    }
-    
-    v(0.5em)
-  }
-}
-
-#let render-volunteer(volunteer-items) = {
-  if volunteer-items == none or volunteer-items.len() == 0 { return }
-  
-  [== Volunteer Work]
-  
-  for item in volunteer-items {
-    generic-two-by-two(
-      top-left: strong(if item.position != none { item.position } else { "" }),
-      top-right: format-date-range(item.startDate, item.endDate),
-      bottom-left: if item.organization != none { item.organization } else { "" },
-      bottom-right: emph(if item.url != none { item.url } else { "" }),
-    )
-    
-    if item.summary != none {
-      par[#item.summary]
-    }
-    
-    if item.highlights != none and item.highlights.len() > 0 {
-      list(..item.highlights)
-    }
-    
-    v(0.5em)
-  }
-}
-
-#let render-languages(lang-items) = {
-  if lang-items == none or lang-items.len() == 0 { return }
-  
-  [== Languages]
-  
-  for item in lang-items {
-    [*#{if item.language != none { item.language } else { "" }}*: #{if item.fluency != none { item.fluency } else { "" }}]
-    
-    v(0.3em)
-  }
-}
-
-#let render-interests(interest-items) = {
-  if interest-items == none or interest-items.len() == 0 { return }
-  
-  [== Interests]
-  
-  for item in interest-items {
-    let keywords-str = if item.keywords != none {
-      item.keywords.join(", ")
-    } else { "" }
-    
-    [*#{if item.name != none { item.name } else { "" }}*: #keywords-str]
-    
-    v(0.3em)
-  }
-}
-
-#let render-references(ref-items) = {
-  if ref-items == none or ref-items.len() == 0 { return }
-  
-  [== References]
-  
-  for item in ref-items {
-    [*#{if item.name != none { item.name } else { "" }}*]
-    
-    if item.reference != none {
-      par[#item.reference]
-    }
-    
-    v(0.5em)
   }
 }
 
@@ -553,34 +835,21 @@
 // Complete JSON Resume Renderer
 // ============================================================================
 
-#let render-json-resume(
-  json-resume,
-  accent-color: "#000000",
-  font: "New Computer Modern",
-  paper: "us-letter",
-  author-font-size: 20pt,
-  font-size: 10pt,
-  lang: "en",
-) = {
-  resume(
-    json-resume,
-    accent-color: accent-color,
-    font: font,
-    paper: paper,
-    author-font-size: author-font-size,
-    font-size: font-size,
-    lang: lang,
-  )[
+#let render-json-resume(json-resume) = {
+  resume(json-resume)[
+    #render-contact(json-resume.basics)
+    #render-about(json-resume.basics)
+    #render-profiles(json-resume.basics.profiles)
     #render-work(json-resume.work)
-    #render-education(json-resume.education)
-    #render-projects(json-resume.projects)
+    #render-project(json-resume.project)
     #render-skills(json-resume.skills)
+    #render-education(json-resume.education)
     #render-certificates(json-resume.certificates)
-    #render-awards(json-resume.awards)
-    #render-publications(json-resume.publications)
-    #render-volunteer(json-resume.volunteer)
-    #render-languages(json-resume.languages)
-    #render-interests(json-resume.interests)
-    #render-references(json-resume.references)
+#render-awards(json-resume.awards)                                                                      │
+#render-publications(json-resume.publications)                                                          │
+#render-volunteer(json-resume.volunteer)                                                                │
+#render-languages(json-resume.languages)                                                                │
+#render-interests(json-resume.interests)                                                                │
+#render-references(json-resume.references)
   ]
 }
