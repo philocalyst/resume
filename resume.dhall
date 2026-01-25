@@ -30,7 +30,7 @@ let PronounSet = Resume.PronounSet
 let SemVer = Resume.SemVer
 
 in  Resume.Resume::{
-    , basics = Some Resume.Basics::{
+    , basics = Some Basics::{
       , name = Some "Dr. Sarah Chen"
       , pronouns = Some { 
         display = "she/her",
