@@ -1,13 +1,41 @@
 -- Import the resume schema (assuming it's saved as resume-schema.dhall)
 let Resume = ./resume-schema.dhall
 
+let Address = Resume.Address
+let Profile = Resume.Profile
+let Basics = Resume.Basics
+let Work = Resume.Work
+let Volunteer = Resume.Volunteer
+let Education = Resume.Education
+let Award = Resume.Award
+let Certificate = Resume.Certificate
+let Publication = Resume.Publication
+let Skill = Resume.Skill
+let Language = Resume.Language
+let Interest = Resume.Interest
+let Reference = Resume.Reference
+let Project = Resume.Project
+let Meta = Resume.Meta
+let DegreeType = Resume.DegreeType
+let SkillLevel = Resume.SkillLevel
+let FluencyLevel = Resume.FluencyLevel
+let LanguageType = Resume.LanguageType
+let ProjectType = Resume.ProjectType
+let EmploymentType = Resume.EmploymentType
+let LocationType = Resume.LocationType
+let NetworkType = Resume.NetworkType
+let Score = Resume.Score
+let Pronouns = Resume.Pronouns
+let PronounSet = Resume.PronounSet
+let SemVer = Resume.SemVer
+
 in  Resume.Resume::{
     , basics = Some Resume.Basics::{
       , name = Some "Dr. Sarah Chen"
       , pronouns = Some { 
         display = "she/her",
-        primary = None Resume.PronounSet,
-        additional = [] : List Resume.PronounSet
+        primary = None PronounSet,
+        additional = [] : List PronounSet
       }
       , label = Some "Senior Software Engineer & Tech Lead"
       , email = Some "sarah.chen@email.com"
@@ -16,7 +44,7 @@ in  Resume.Resume::{
       , summary = Some
           "Full-stack engineer with 8+ years of experience building scalable distributed systems. Passionate about functional programming, type systems, and developer tooling. PhD in Computer Science with focus on programming language theory."
       , image = Some "https://sarahchen.dev/profile.jpg"
-      , location = Some Resume.Address::{
+      , location = Some Address::{
         , street = Some "742 Evergreen Terrace"
         , city = Some "San Francisco"
         , region = Some "CA"
@@ -24,43 +52,43 @@ in  Resume.Resume::{
         , countryCode = Some "US"
         }
       , profiles = Some
-        [ Resume.Profile::{
-          , network = Some Resume.NetworkType.GitHub
+        [ Profile::{
+          , network = Some NetworkType.GitHub
           , username = Some "schen"
           , url = Some "https://github.com/schen"
           }
-        , Resume.Profile::{
-          , network = Some Resume.NetworkType.LinkedIn
+        , Profile::{
+          , network = Some NetworkType.LinkedIn
           , username = Some "sarahchen"
           , url = Some "https://linkedin.com/in/sarahchen"
           }
-        , Resume.Profile::{
-          , network = Some Resume.NetworkType.Twitter
+        , Profile::{
+          , network = Some NetworkType.Twitter
           , username = Some "sarahcodes"
           , url = Some "https://twitter.com/sarahcodes"
           }
-        , Resume.Profile::{
-          , network = Some Resume.NetworkType.Mastodon
+        , Profile::{
+          , network = Some NetworkType.Mastodon
           , username = Some "@sarah@fosstodon.org"
           , url = Some "https://fosstodon.org/@sarah"
           }
-        , Resume.Profile::{
-          , network = Some Resume.NetworkType.Medium
+        , Profile::{
+          , network = Some NetworkType.Medium
           , username = Some "sarahchen"
           , url = Some "https://medium.com/@sarahchen"
           }
-        , Resume.Profile::{
-          , network = Some Resume.NetworkType.StackOverflow
+        , Profile::{
+          , network = Some NetworkType.StackOverflow
           , username = Some "schen"
           , url = Some "https://stackoverflow.com/users/12345/schen"
           }
         ]
       }
     , work = Some
-      [ Resume.Work::{
+      [ Work::{
         , name = Some "TechCorp Inc"
         , location = Some
-            ( Resume.LocationType.Hybrid
+            ( LocationType.Hybrid
                 { onSite = "San Francisco, CA"
                 , description = Some "3 days in office, 2 days remote"
                 }
@@ -69,7 +97,7 @@ in  Resume.Resume::{
         , position = Some "Senior Software Engineer & Tech Lead"
         , url = Some "https://techcorp.example"
         , startDate = Some "2020-03-01"
-        , employmentType = Some Resume.EmploymentType.FullTime
+        , employmentType = Some EmploymentType.FullTime
         , summary = Some
             "Lead a team of 6 engineers building distributed systems for real-time data processing. Architected migration from monolith to microservices serving 10M+ requests per day."
         , highlights = Some
@@ -80,15 +108,15 @@ in  Resume.Resume::{
           , "Presented at internal tech talks on type-driven development"
           ]
         }
-      , Resume.Work::{
+      , Work::{
         , name = Some "StartupXYZ"
-        , location = Some Resume.LocationType.Remote
+        , location = Some LocationType.Remote
         , description = Some "Early-stage fintech startup"
         , position = Some "Software Engineer"
         , url = Some "https://startupxyz.example"
         , startDate = Some "2018-06-01"
         , endDate = Some "2020-02-01"
-        , employmentType = Some Resume.EmploymentType.FullTime
+        , employmentType = Some EmploymentType.FullTime
         , summary = Some
             "Full-stack engineer in a fast-paced startup environment. Built features across the stack from database to frontend."
         , highlights = Some
@@ -97,13 +125,13 @@ in  Resume.Resume::{
           , "Contributed to all phases of product development from design to deployment"
           ]
         }
-      , Resume.Work::{
+      , Work::{
         , name = Some "Self-Employed"
-        , location = Some Resume.LocationType.Remote
+        , location = Some LocationType.Remote
         , position = Some "Freelance Developer"
         , startDate = Some "2017-01-01"
         , endDate = Some "2018-05-01"
-        , employmentType = Some Resume.EmploymentType.Freelance
+        , employmentType = Some EmploymentType.Freelance
         , summary = Some
             "Provided web development and consulting services to small businesses and startups."
         , highlights = Some
@@ -114,14 +142,14 @@ in  Resume.Resume::{
         }
       ]
     , education = Some
-      [ Resume.Education::{
+      [ Education::{
         , institution = Some "Stanford University"
         , url = Some "https://stanford.edu"
         , area = Some "Computer Science"
-        , studyType = Some Resume.DegreeType.PhD
+        , studyType = Some DegreeType.PhD
         , startDate = Some "2013-09-01"
         , endDate = Some "2017-06-01"
-        , score = Some (Resume.Score.GPA_Weighted {
+        , score = Some (Score.GPA_Weighted {
           score = 3.95,
           scale = 4.0,
         })
@@ -132,15 +160,15 @@ in  Resume.Resume::{
           , "Program Analysis and Verification"
           ]
         }
-      , Resume.Education::{
+      , Education::{
         , institution = Some "UC Berkeley"
         , url = Some "https://berkeley.edu"
         , area = Some "Computer Science"
-        , studyType = Some Resume.DegreeType.BachelorDegree
+        , studyType = Some DegreeType.BachelorDegree
         , startDate = Some "2009-08-01"
         , endDate = Some "2013-05-01"
         , score = Some
-            ( Resume.Score.GPA_Weighted
+            ( Score.GPA_Weighted
                 { score = 4.15, scale = 5.0 }
             )
         , courses = Some
@@ -150,20 +178,20 @@ in  Resume.Resume::{
           , "Artificial Intelligence"
           ]
         }
-      , Resume.Education::{
+      , Education::{
         , institution = Some "Fullstack Academy"
         , url = Some "https://fullstackacademy.com"
         , area = Some "Web Development"
-        , studyType = Some Resume.DegreeType.Bootcamp
+        , studyType = Some DegreeType.Bootcamp
         , startDate = Some "2016-06-01"
         , endDate = Some "2016-09-01"
-        , score = Some (Resume.Score.PassFail True)
+        , score = Some (Score.PassFail True)
         }
       ]
     , skills = Some
-      [ Resume.Skill::{
+      [ Skill::{
         , name = Some "Programming Languages"
-        , level = Some Resume.SkillLevel.Expert
+        , level = Some SkillLevel.Expert
         , keywords = Some
           [ "Rust"
           , "TypeScript"
@@ -174,9 +202,9 @@ in  Resume.Resume::{
           , "OCaml"
           ]
         }
-      , Resume.Skill::{
+      , Skill::{
         , name = Some "Web Technologies"
-        , level = Some Resume.SkillLevel.Expert
+        , level = Some SkillLevel.Expert
         , keywords = Some
           [ "React"
           , "Node.js"
@@ -187,9 +215,9 @@ in  Resume.Resume::{
           , "CSS"
           ]
         }
-      , Resume.Skill::{
+      , Skill::{
         , name = Some "Infrastructure & DevOps"
-        , level = Some Resume.SkillLevel.Advanced
+        , level = Some SkillLevel.Advanced
         , keywords = Some
           [ "Kubernetes"
           , "Docker"
@@ -200,9 +228,9 @@ in  Resume.Resume::{
           , "CI/CD"
           ]
         }
-      , Resume.Skill::{
+      , Skill::{
         , name = Some "Tools & Practices"
-        , level = Some Resume.SkillLevel.Expert
+        , level = Some SkillLevel.Expert
         , keywords = Some
           [ "Git"
           , "Test-Driven Development"
@@ -211,36 +239,36 @@ in  Resume.Resume::{
           , "System Design"
           ]
         }
-      , Resume.Skill::{
+      , Skill::{
         , name = Some "Configuration Languages"
-        , level = Some Resume.SkillLevel.Advanced
+        , level = Some SkillLevel.Advanced
         , keywords = Some [ "Dhall", "YAML", "JSON", "TOML" ]
         }
       ]
     , languages = Some
-      [ Resume.Language::{
-        , language = Some Resume.LanguageType.English
-        , fluency = Some Resume.FluencyLevel.NativeOrBilingual
+      [ Language::{
+        , language = Some LanguageType.English
+        , fluency = Some FluencyLevel.NativeOrBilingual
         }
-      , Resume.Language::{
-        , language = Some Resume.LanguageType.Mandarin
-        , fluency = Some Resume.FluencyLevel.NativeOrBilingual
+      , Language::{
+        , language = Some LanguageType.Mandarin
+        , fluency = Some FluencyLevel.NativeOrBilingual
         }
-      , Resume.Language::{
-        , language = Some Resume.LanguageType.Spanish
-        , fluency = Some Resume.FluencyLevel.ProfessionalWorking
+      , Language::{
+        , language = Some LanguageType.Spanish
+        , fluency = Some FluencyLevel.ProfessionalWorking
         }
-      , Resume.Language::{
-        , language = Some Resume.LanguageType.French
-        , fluency = Some Resume.FluencyLevel.LimitedWorking
+      , Language::{
+        , language = Some LanguageType.French
+        , fluency = Some FluencyLevel.LimitedWorking
         }
       ]
     , projects = Some
-      [ Resume.Project::{
+      [ Project::{
         , name = Some "RustQL"
         , description = Some
             "Type-safe GraphQL client library for Rust with compile-time query validation"
-        , type = Some Resume.ProjectType.OpenSource
+        , type = Some ProjectType.OpenSource
         , url = Some "https://github.com/schen/rustql"
         , startDate = Some "2021-03-01"
         , roles = Some [ "Creator", "Maintainer" ]
@@ -251,11 +279,11 @@ in  Resume.Resume::{
           ]
         , keywords = Some [ "Rust", "GraphQL", "Type Systems", "Code Generation" ]
         }
-      , Resume.Project::{
-        , name = Some "Dhall Resume Generator"
+      , Project::{
+        , name = Some "Dhall Generator"
         , description = Some
             "Tool for generating beautiful resumes from Dhall configuration files"
-        , type = Some Resume.ProjectType.Application
+        , type = Some ProjectType.Application
         , url = Some "https://github.com/schen/dhall-resume"
         , startDate = Some "2023-11-01"
         , roles = Some [ "Creator" ]
@@ -266,11 +294,11 @@ in  Resume.Resume::{
           ]
         , keywords = Some [ "Dhall", "TypeScript", "PDF Generation" ]
         }
-      , Resume.Project::{
+      , Project::{
         , name = Some "Tech Talks: Functional Programming in Production"
         , description = Some
             "Series of conference talks on adopting functional programming in industry"
-        , type = Some Resume.ProjectType.Talk
+        , type = Some ProjectType.Talk
         , startDate = Some "2022-01-01"
         , roles = Some [ "Speaker" ]
         , highlights = Some
@@ -281,11 +309,11 @@ in  Resume.Resume::{
         , keywords = Some
           [ "Public Speaking", "Functional Programming", "Type Systems" ]
         }
-      , Resume.Project::{
+      , Project::{
         , name = Some "Community Photography Exhibition"
         , description = Some
             "Curated photography exhibition showcasing Bay Area tech culture"
-        , type = Some Resume.ProjectType.Exhibition
+        , type = Some ProjectType.Exhibition
         , startDate = Some "2023-03-01"
         , endDate = Some "2023-03-31"
         , roles = Some [ "Photographer", "Curator" ]
@@ -296,11 +324,11 @@ in  Resume.Resume::{
           ]
         , keywords = Some [ "Photography", "Art", "Community" ]
         }
-      , Resume.Project::{
+      , Project::{
         , name = Some "Tech Diversity Mentorship Program"
         , description = Some
             "Founded mentorship program pairing senior engineers with underrepresented minorities"
-        , type = Some Resume.ProjectType.Mentorship
+        , type = Some ProjectType.Mentorship
         , startDate = Some "2021-06-01"
         , roles = Some [ "Founder", "Mentor" ]
         , entity = Some "Tech Community Foundation"
@@ -313,7 +341,7 @@ in  Resume.Resume::{
         }
       ]
     , publications = Some
-      [ Resume.Publication::{
+      [ Publication::{
         , name = Some
             "Type-Preserving Compilation for Large-Scale Optimizing Compilers"
         , publisher = Some "ACM SIGPLAN"
@@ -322,7 +350,7 @@ in  Resume.Resume::{
         , summary = Some
             "Presented novel techniques for maintaining type information through aggressive compiler optimizations, enabling better error messages and verification."
         }
-      , Resume.Publication::{
+      , Publication::{
         , name = Some "The Pragmatic Type Theorist's Guide to Rust"
         , publisher = Some "Medium"
         , releaseDate = Some "2022-08-01"
@@ -332,14 +360,14 @@ in  Resume.Resume::{
         }
       ]
     , certificates = Some
-      [ Resume.Certificate::{
+      [ Certificate::{
         , name = Some "AWS Certified Solutions Architect - Professional"
         , issuer = Some "Amazon Web Services"
         , date = Some "2022-03-15"
         , expirationDate = Some "2025-03-15"
         , url = Some "https://aws.amazon.com/certification/"
         }
-      , Resume.Certificate::{
+      , Certificate::{
         , name = Some "Certified Kubernetes Administrator (CKA)"
         , issuer = Some "Cloud Native Computing Foundation"
         , date = Some "2021-09-20"
@@ -348,20 +376,20 @@ in  Resume.Resume::{
         }
       ]
     , awards = Some
-      [ Resume.Award::{
+      [ Award::{
         , title = Some "Best Paper Award"
         , date = Some "2016-06-15"
         , awarder = Some "PLDI 2016"
         , summary = Some
             "Recognized for outstanding research contribution in programming languages"
         }
-      , Resume.Award::{
+      , Award::{
         , title = Some "Graduate Fellowship"
         , date = Some "2013-09-01"
         , awarder = Some "National Science Foundation"
         , summary = Some "Competitive fellowship for PhD studies in Computer Science"
         }
-      , Resume.Award::{
+      , Award::{
         , title = Some "Top 10 Tech Influencers in Functional Programming"
         , date = Some "2023-12-01"
         , awarder = Some "Functional Programming Magazine"
@@ -370,11 +398,11 @@ in  Resume.Resume::{
         }
       ]
     , volunteer = Some
-      [ Resume.Volunteer::{
+      [ Volunteer::{
         , organization = Some "Code for America"
         , position = Some "Volunteer Developer"
         , url = Some "https://codeforamerica.org"
-        , location = Some Resume.LocationType.Remote
+        , location = Some LocationType.Remote
         , startDate = Some "2019-01-01"
         , summary = Some
             "Contribute to civic tech projects improving government services"
@@ -383,11 +411,11 @@ in  Resume.Resume::{
           , "Mentored new volunteers on project onboarding"
           ]
         }
-      , Resume.Volunteer::{
+      , Volunteer::{
         , organization = Some "SF SPCA"
         , position = Some "Dog Walker & Event Volunteer"
         , url = Some "https://sfspca.org"
-        , location = Some (Resume.LocationType.OnSite "San Francisco, CA")
+        , location = Some (LocationType.OnSite "San Francisco, CA")
         , startDate = Some "2020-06-01"
         , summary = Some
             "Weekly volunteer helping care for shelter animals and supporting adoption events"
@@ -398,41 +426,41 @@ in  Resume.Resume::{
         }
       ]
     , interests = Some
-      [ Resume.Interest::{
+      [ Interest::{
         , name = Some "Open Source Software"
         , keywords = Some
           [ "Rust", "Type Systems", "Developer Tools", "Programming Languages" ]
         }
-      , Resume.Interest::{
+      , Interest::{
         , name = Some "Photography"
         , keywords = Some
           [ "Street Photography", "Landscape", "Film Photography", "Darkroom" ]
         }
-      , Resume.Interest::{
+      , Interest::{
         , name = Some "Outdoor Activities"
         , keywords = Some
           [ "Hiking", "Rock Climbing", "Backpacking", "Trail Running" ]
         }
-      , Resume.Interest::{
+      , Interest::{
         , name = Some "Music"
         , keywords = Some [ "Piano", "Jazz", "Classical", "Vinyl Collecting" ]
         }
       ]
     , references = Some
-      [ Resume.Reference::{
+      [ Reference::{
         , name = Some "Dr. James Wilson"
         , reference = Some
             "Sarah was one of the most talented PhD students I've advised. Her research on type systems was groundbreaking, and her ability to explain complex concepts is exceptional. She would be an asset to any team."
         }
-      , Resume.Reference::{
+      , Reference::{
         , name = Some "Alex Rodriguez, CTO at TechCorp"
         , reference = Some
             "Sarah is an exceptional technical leader who combines deep expertise with excellent mentorship skills. She transformed our engineering culture and delivered outstanding results. I can't recommend her highly enough."
         }
       ]
-    , meta = Some Resume.Meta::{
+    , meta = Some Meta::{
       , canonical = Some "https://sarahchen.dev/resume.json"
-      , version = Some Resume.SemVer::{
+      , version = Some SemVer::{
         , major = 2
         , minor = 1
         , patch = 0
