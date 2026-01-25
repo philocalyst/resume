@@ -78,7 +78,8 @@ fn main() -> Result<()> {
         Commands::Validate { input } => {
             let data = fs::read_to_string(&input)
                 .with_context(|| format!("Could not read {:?}", input))?;
-            let _: Resume = serde_json::from_str(&data)
+            let _: Resume = serde_dhall::from_str(&data)
+                .parse()
                 .with_context(|| "Validation failed: JSON does not match Resume schema")?;
             println!("{:?}: Valid.", input);
         }
