@@ -92,8 +92,9 @@ fn main() -> Result<()> {
             // Read and parse
             let data = fs::read_to_string(&input)
                 .with_context(|| format!("Could not read {:?}", input))?;
-            let resume: Resume =
-                serde_json::from_str(&data).with_context(|| "Failed to parse resume JSON")?;
+            let resume: Resume = serde_dhall::from_str(&data)
+                .parse()
+                .with_context(|| "Failed to parse resume JSON")?;
 
             // Bake with Typst
             let source_document = bake_doc!(template, resume, {
