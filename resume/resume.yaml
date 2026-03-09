@@ -36,24 +36,24 @@ education:
       - The Sentinnel
       - The Peak
 
-  - institution: Savannah Arts Academy
-    studyType: High School Diploma
-    area: Music
-    location: Savannah, GA
-    startDate: 2020-08-01
-    endDate: 2024-05-01
-    score: "3.2"
-    courses: []
-    activities:
-      - Advanced Band (Clarinet)
-      - Savannah Arts Academy Student Council (Band Representative)
-      - Amnesty International
-      - Tri-M Music Honor Society
-      - Yoga Club
-      - FBLA (school store setup)
-      - Album Club
-      - Track
-      - Cross Country
+  # - institution: Savannah Arts Academy
+  #   studyType: High School Diploma
+  #   area: Music
+  #   location: Savannah, GA
+  #   startDate: 2020-08-01
+  #   endDate: 2024-05-01
+  #   score: "3.2"
+  #   courses: []
+  #   activities:
+  #     - Advanced Band (Clarinet)
+  #     - Savannah Arts Academy Student Council (Band Representative)
+  #     - Amnesty International
+  #     - Tri-M Music Honor Society
+  #     - Yoga Club
+  #     - FBLA (school store setup)
+  #     - Album Club
+  #     - Track
+  #     - Cross Country
 
   # - institution: Bartlett STEM Academy
   #   studyType: Middle School
@@ -144,16 +144,6 @@ work:
       - Performed mowing, yard work, and farm work during summers
 
 projects:
-  - name: Reporter Writing Portfolio
-    url: https://stuxf.dev
-    description: Selected journalism clips covering local policy, education, and community features.
-    startDate: ~
-    endDate: ~
-    highlights:
-      - Selected clips covering local policy, education, and community features
-      - Focus on concise reporting, sourcing, and clean layout
-    keywords: []
-
   - name: FBLA School Store Setup
     description: Student-led initiative to establish a functional school store for FBLA.
     startDate: 2023-01-01
