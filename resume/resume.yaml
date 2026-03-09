@@ -1,0 +1,122 @@
+basics:
+  name: Vidhan Bhatt
+  label: Software Developer
+  email: me@vidhan.io
+  url: vidhan.io
+  profiles:
+    - network: GitHub
+      username: vidhanio
+      url: https://github.com/vidhanio
+    - network: LinkedIn
+      username: /in/vidhanio
+      url: https://www.linkedin.com/in/vidhanio
+
+education:
+  - institution: McMaster University
+    studyType: Bachelor
+    area: Computer Science
+    startDate: 2022-09-01
+    courses:
+      - Data Structures & Algorithms
+      - Computer Architecture
+      - Software Development (Python, Haskell, Java, C, Elm)
+    score: 3.98/4.0
+
+work:
+  - name: Sun Life
+    position: Associate Software Engineer
+    startDate: 2024-05-06
+    endDate: 2024-08-30
+    highlights:
+      - Migrated database queries to PostgreSQL as well as updated the documentation for the Java backend
+      - Led research on web notifications
+      - Developed and iterated upon the front-end of the web notification POC
+      - Presented a live demo of the web notification POC to the team
+
+projects:
+  - name: vidhan.io
+    url: https://github.com/vidhanio/site
+    description: A personal website and blog, written in Rust.
+    startDate: 2023-07-26
+    keywords:
+      - Rust
+      - Markdown
+      - Typst
+      - GitHub Actions
+    highlights:
+      - Uses Typst to generate this very resume automatically and serve it as a static asset
+      - Parses markdown blog posts and renders them as HTML
+      - Uses tree-sitter to provide powerful IDE-like syntax highlighting for blog posts
+      - Implements industry-standard testing and continuous integration using GitHub Actions
+      - Published as an open-source project/example of a website in Rust, and has accumulated 50+ stars on GitHub
+
+  - name: hypertext
+    url: https://github.com/vidhanio/hypertext
+    description: A blazing fast type-checked HTML macro library for rust.
+    startDate: 2024-01-07
+    keywords:
+      - Rust
+      - GitHub Actions
+    highlights:
+      - Created for use as an HTML template engine in my personal website
+      - Uses Rust's type system to ensure that HTML tags and attributes are valid
+      - Uses GitHub Actions for continuous integration
+      - Published as an open-source project/library, and has accumulated 100+ stars on GitHub and is used in 10+ other websites
+
+  - name: MacEats
+    url: https://github.com/vidhanio/maceats
+    description: A full-stack modern reimplementation of MacEats, the McMaster University campus dining site.
+    startDate: 2022-10-17
+    endDate: 2022-10-31
+    keywords:
+      - Rust
+      - React
+      - Next.js
+      - Docker
+      - Fly.io
+      - Vercel
+    highlights:
+      - Created for the 2022 McMaster CSS Hacktober event
+      - Made a Rust library to scrape the original website and provide a programmatic interface to the data
+      - Made a Rust backend to serve the data for general use by anyone
+      - Made a React and Next.js frontend to access the modern site
+      - Received 100% in judge voting, placing second overall in the competition
+
+skills:
+  - name: Programming Languages
+    keywords:
+      - Rust
+      - Go
+      - JavaScript
+      - TypeScript
+      - Python
+      - Haskell
+      - Java
+      - Shell Scripting
+      - HTML
+      - CSS
+      - C++
+      - C
+      - Elm
+
+  - name: Frameworks/Databases
+    keywords:
+      - React
+      - Next.js
+      - Node.js
+      - Svelte
+      - Tailwind CSS
+      - SQL (PostgreSQL, SQLite, Supabase)
+      - MongoDB
+      - Sled
+
+  - name: Continuous Integration/Continuous Development
+    keywords:
+      - Docker
+      - Git
+      - GitHub
+      - GitHub Actions
+      - Kubernetes
+      - Fly.io
+      - Vercel
+      - Google Cloud Platform
