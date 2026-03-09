@@ -2,6 +2,10 @@
 #set page(margin: 0.5in, fill: black)
 #set list(indent: 1em, marker: "*")
 #let resume = yaml("resume.yaml")
+#place(
+  center + horizon,
+  image("./spiral_dots_overlay.png", width: 190%, height: 190%),
+)
 #let datetime-from-str(s) = {
   let RE = regex("^([1-2][0-9]{3})-([0-1][0-9])-([0-3][0-9])$")
   let caps = s.match(RE).captures.map(int)
@@ -57,20 +61,33 @@
   })
 }
 #let name_block = box(
-fill: white,
-pad(x: 12pt, y: 6pt, text(size: 1.25em, font: "Gap Sans", fill: black, "miles wirht"))
+  fill: white,
+  pad(x: 12pt, y: 6pt, text(
+    size: 1.25em,
+    font: "Gap Sans",
+    fill: black,
+    "miles wirht",
+  )),
 )
 #place(
   top + left,
   dx: -52pt,
   dy: 3pt,
-  rotate(90deg, origin: center + top)[#name_block]
+  rotate(90deg, origin: center + top)[#name_block],
 )
 #show heading.where(level: 1): set text(size: 32pt, font: "Bagnard")
 #align(center)[
-= THE STUDENT
-#link("mailto:" + resume.basics.email, resume.basics.email)
-#resume.basics.profiles.map(p => link(p.url)[*\[#lower(p.network)\]* #p.at("username", default: p.url)]).join(" | ")
+  = THE STUDENT
+  #link("mailto:" + resume.basics.email, resume.basics.email) |
+  #(
+    resume
+      .basics
+      .profiles
+      .map(p => link(
+        p.url,
+      )[*\[#lower(p.network)\]* #p.at("username", default: p.url)])
+      .join(" | ")
+  )
 ]
 
 // Education: score is a float in YAML, convert to string; no courses field so use activities
