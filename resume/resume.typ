@@ -11,6 +11,7 @@
   let caps = s.match(RE).captures.map(int)
   datetime(year: caps.at(0), month: caps.at(1), day: caps.at(2))
 }
+
 #let section-item(
   name,
   url: none,
@@ -44,6 +45,7 @@
     [#datetime-from-str(start).display("[month repr:short]. [year]") - #end]
   }
   body = if type(body) == array {
+    v(1pt)
     list(..body)
   } else {
     body
@@ -51,11 +53,11 @@
   block(below: 0.75em)[#box[=== #name] #note #h(1fr) #date]
   description
   body
+  v(3pt)
 }
 #let section(name, items, f) = {
   let items = items.map(f)
-  block(below: 0.5em)[== #name]
-  line(length: 100%)
+  block(below: 0.5em)[== #underline(name)]
   block(above: 0.75em, for item in items {
     section-item(item.remove("name"), ..item)
   })
