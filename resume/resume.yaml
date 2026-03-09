@@ -1,122 +1,167 @@
 basics:
-  name: Vidhan Bhatt
-  label: Software Developer
-  email: me@vidhan.io
-  url: vidhan.io
+  name: Miles Wirth
+  label: Journalist & Developer
+  email: milestheperson@posteo.net
+  phone: +1 (912) 663-9531
+  location: Savannah, GA
   profiles:
-    - network: GitHub
-      username: vidhanio
-      url: https://github.com/vidhanio
     - network: LinkedIn
-      username: /in/vidhanio
-      url: https://www.linkedin.com/in/vidhanio
+      username: /in/philocalyst
+      url: https://www.linkedin.com/in/philocalyst
 
 education:
-  - institution: McMaster University
-    studyType: Bachelor
-    area: Computer Science
-    startDate: 2022-09-01
-    courses:
-      - Data Structures & Algorithms
-      - Computer Architecture
-      - Software Development (Python, Haskell, Java, C, Elm)
-    score: 3.98/4.0
+  - institution: Kennesaw State University
+    department: Norman J. Radow College of Humanities and Social Sciences
+    studyType: Bachelor of Science
+    area: Political Science
+    location: Kennesaw, GA
+    startDate: 2025-08-01
+    endDate: 2029-05-01
+    score: "3.4"
+    courses: []
+    activities:
+      - HooThems (A Cappella)
+      - Model African Union
+      - Student Government
+      - For Film's Sake (crew, acting)
+      - The Sentinnel
+      - The Peak
+      - Marketing Officer at Rotaract
+
+  - institution: Savannah Arts Academy
+    studyType: High School Diploma
+    area: Music
+    location: Savannah, GA
+    startDate: 2020-08-01
+    endDate: 2024-05-01
+    score: "3.2"
+    courses: []
+    activities:
+      - Amnesty International
+      - Tri-M Music Honor Society
+      - Yoga Club
+      - FBLA (school store setup)
+      - Album Club
+      - Track
+      - Cross Country
 
 work:
-  - name: Sun Life
-    position: Associate Software Engineer
-    startDate: 2024-05-06
-    endDate: 2024-08-30
+  - name: McCord for Congress
+    position: Core Team
+    location: Savannah, GA
+    startDate: 2025-06-01
     highlights:
-      - Migrated database queries to PostgreSQL as well as updated the documentation for the Java backend
-      - Led research on web notifications
-      - Developed and iterated upon the front-end of the web notification POC
-      - Presented a live demo of the web notification POC to the team
+      - Created the campaign website
+      - Managing email campaigns
+      - Onboarding donors
+
+  - name: Touch Grass Together
+    position: Team Lead
+    location: Online
+    startDate: 2025-12-01
+    highlights:
+      - In charge of the online presence for TGT
+      - Created the website
+      - Actively developing an app with a team of five
+
+  - name: Freelance
+    position: Journalist
+    location: Glennville, GA (Hybrid)
+    startDate: 2024-07-01
+    endDate: 2025-07-01
+    highlights:
+      - Reported local issues and community events; pitched, researched, and wrote articles under tight deadlines
+      - Conducted interviews, FOIA/public records pulls, and fact-checking
+      - Managed edits and revisions; delivered clean copy and photos
+
+  - name: JEA
+    position: Camp Counselor
+    location: Savannah, GA
+    startDate: 2023-02-01
+    endDate: 2023-04-01
+    highlights:
+      - Led activities for youth; handled daily logistics and safety
+      - Supported program delivery and communication with staff and parents
+
+  - name: Historic Savannah Theatre
+    position: Usher
+    location: Savannah, GA
+    startDate: 2022-09-01
+    endDate: 2022-12-01
+    highlights:
+      - Guided patrons to seats and supported front-of-house operations
+      - Resolved issues quickly to keep shows on schedule
 
 projects:
-  - name: vidhan.io
-    url: https://github.com/vidhanio/site
-    description: A personal website and blog, written in Rust.
-    startDate: 2023-07-26
-    keywords:
-      - Rust
-      - Markdown
-      - Typst
-      - GitHub Actions
+  - name: Reporter Writing Portfolio
+    url: https://stuxf.dev
+    description: Selected journalism clips covering local policy, education, and community features.
     highlights:
-      - Uses Typst to generate this very resume automatically and serve it as a static asset
-      - Parses markdown blog posts and renders them as HTML
-      - Uses tree-sitter to provide powerful IDE-like syntax highlighting for blog posts
-      - Implements industry-standard testing and continuous integration using GitHub Actions
-      - Published as an open-source project/example of a website in Rust, and has accumulated 50+ stars on GitHub
+      - Selected clips covering local policy, education, and community features
+      - Focus on concise reporting, sourcing, and clean layout
+    keywords:
+      -
 
-  - name: hypertext
-    url: https://github.com/vidhanio/hypertext
-    description: A blazing fast type-checked HTML macro library for rust.
-    startDate: 2024-01-07
-    keywords:
-      - Rust
-      - GitHub Actions
+  - name: FBLA School Store Setup
+    description: Student-led initiative to establish a functional school store for FBLA.
+    startDate: 2023-01-01
+    endDate: 2024-05-01
     highlights:
-      - Created for use as an HTML template engine in my personal website
-      - Uses Rust's type system to ensure that HTML tags and attributes are valid
-      - Uses GitHub Actions for continuous integration
-      - Published as an open-source project/library, and has accumulated 100+ stars on GitHub and is used in 10+ other websites
+      - Helped stand up inventory, basic bookkeeping, and volunteer scheduling
+      - Documented processes; handed off operations post-graduation
+    keywords:
+      -
 
-  - name: MacEats
-    url: https://github.com/vidhanio/maceats
-    description: A full-stack modern reimplementation of MacEats, the McMaster University campus dining site.
-    startDate: 2022-10-17
-    endDate: 2022-10-31
-    keywords:
-      - Rust
-      - React
-      - Next.js
-      - Docker
-      - Fly.io
-      - Vercel
+volunteer:
+  - organization: Unitarian Universalist Association
+    position: Team Lead, Youth Spaces Revitalization
+    location: Savannah, GA
+    startDate: 2023-02-01
     highlights:
-      - Created for the 2022 McMaster CSS Hacktober event
-      - Made a Rust library to scrape the original website and provide a programmatic interface to the data
-      - Made a Rust backend to serve the data for general use by anyone
-      - Made a React and Next.js frontend to access the modern site
-      - Received 100% in judge voting, placing second overall in the competition
+      - Cleaned and restored two unused rooms into youth discussion/learning spaces
+      - Organized volunteers, supplies, and timelines
+
+awards:
+  - title: Eagle Scout
+    awarder: Boy Scouts of America
+    date: 2024-09-01
+
+  - title: Reagan Presidential Leadership Award
+    awarder: Reagan Foundation
+    date: 2024-04-01
+
+testScores:
+  - name: ACT
+    score: 33
+    date: 2023-11-01
 
 skills:
-  - name: Programming Languages
+  - name: Communication
     keywords:
-      - Rust
-      - Go
-      - JavaScript
-      - TypeScript
-      - Python
-      - Haskell
-      - Java
-      - Shell Scripting
+      - Reporting
+      - Interviewing
+      - Copyediting
+      - Public Speaking
+
+  - name: Organization
+    keywords:
+      - Event Coordination
+      - Volunteer Management
+      - Basic Bookkeeping
+
+  - name: Technical
+    keywords:
+      - Bash
       - HTML
       - CSS
-      - C++
-      - C
-      - Elm
-
-  - name: Frameworks/Databases
-    keywords:
-      - React
-      - Next.js
-      - Node.js
-      - Svelte
-      - Tailwind CSS
-      - SQL (PostgreSQL, SQLite, Supabase)
-      - MongoDB
-      - Sled
-
-  - name: Continuous Integration/Continuous Development
-    keywords:
-      - Docker
       - Git
-      - GitHub
-      - GitHub Actions
-      - Kubernetes
-      - Fly.io
-      - Vercel
-      - Google Cloud Platform
+      - Markdown
+      - Rust
+      - Google Docs
+      - Google Sheets
+
+languages:
+  - language: English
+    fluency: Native
+  - language: Spanish
+    fluency: Very Limited Working
