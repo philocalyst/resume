@@ -1,13 +1,20 @@
 basics:
-  name: Miles Wirth
+  name: Miles Thomas Potts Wirth
   label: Journalist & Developer
   email: milestheperson@posteo.net
   phone: +1 (912) 663-9531
   location: Savannah, GA
+  summary: |
+    I promise my work will be transparent, durable, and honest.
+    I distinguish between what I know, what I believe, and what I am guessing.
+    I document reasoning, not just conclusions. I will not optimize for what
+    looks good now at the expense of what holds up later.
   profiles:
     - network: LinkedIn
       username: /in/philocalyst
       url: https://www.linkedin.com/in/philocalyst
+    - network: GitHub
+      url: https://github.com
 
 education:
   - institution: Kennesaw State University
@@ -18,15 +25,16 @@ education:
     startDate: 2025-08-01
     endDate: 2029-05-01
     score: "3.4"
-    courses: []
+    courses:
+      - Introduction to Economics (ECON1101)
     activities:
       - HooThems (A Cappella)
       - Model African Union
+      - Chief Marketing Officer at Rotaract
       - Student Government
-      - For Film's Sake (crew, acting)
+      - For Film's Sake (acting and lighting)
       - The Sentinnel
       - The Peak
-      - Marketing Officer at Rotaract
 
   - institution: Savannah Arts Academy
     studyType: High School Diploma
@@ -37,6 +45,8 @@ education:
     score: "3.2"
     courses: []
     activities:
+      - Advanced Band (Clarinet)
+      - Savannah Arts Academy Student Council (Band Representative)
       - Amnesty International
       - Tri-M Music Honor Society
       - Yoga Club
@@ -45,11 +55,32 @@ education:
       - Track
       - Cross Country
 
+  # - institution: Bartlett STEM Academy
+  #   studyType: Middle School
+  #   location: Savannah, GA
+  #   startDate: 2018-08-01
+  #   endDate: 2021-05-01
+  #   area: ""
+  #   score: ""
+  #   courses: []
+  #   activities: []
+
+  # - institution: Charles Ellis Montessori Academy
+  #   studyType: Primary School
+  #   area: ""
+  #   location: Savannah, GA
+  #   startDate: 2008-08-01
+  #   endDate: 2018-05-01
+  #   score: ""
+  #   courses: []
+  #   activities: []
+
 work:
   - name: McCord for Congress
     position: Core Team
     location: Savannah, GA
     startDate: 2025-06-01
+    endDate: ~
     highlights:
       - Created the campaign website
       - Managing email campaigns
@@ -59,10 +90,21 @@ work:
     position: Team Lead
     location: Online
     startDate: 2025-12-01
+    endDate: ~
     highlights:
       - In charge of the online presence for TGT
       - Created the website
       - Actively developing an app with a team of five
+
+  - name: GitHub
+    position: Open Source Developer
+    location: Remote
+    startDate: 2024-03-01
+    endDate: ~
+    highlights:
+      - Averaging 6,000 commits per year
+      - Over 400 total stars across repositories
+      - Thirty filed issues, zero open
 
   - name: Freelance
     position: Journalist
@@ -73,9 +115,10 @@ work:
       - Reported local issues and community events; pitched, researched, and wrote articles under tight deadlines
       - Conducted interviews, FOIA/public records pulls, and fact-checking
       - Managed edits and revisions; delivered clean copy and photos
+      - Created publications for a number of online papers
 
   - name: JEA
-    position: Camp Counselor
+    position: Camp Counselor / Teacher Assistant
     location: Savannah, GA
     startDate: 2023-02-01
     endDate: 2023-04-01
@@ -92,15 +135,24 @@ work:
       - Guided patrons to seats and supported front-of-house operations
       - Resolved issues quickly to keep shows on schedule
 
+  - name: Self-Employed
+    position: Seasonal Laborer
+    location: Savannah, GA
+    startDate: ~
+    endDate: ~
+    highlights:
+      - Performed mowing, yard work, and farm work during summers
+
 projects:
   - name: Reporter Writing Portfolio
     url: https://stuxf.dev
     description: Selected journalism clips covering local policy, education, and community features.
+    startDate: ~
+    endDate: ~
     highlights:
       - Selected clips covering local policy, education, and community features
       - Focus on concise reporting, sourcing, and clean layout
-    keywords:
-      -
+    keywords: []
 
   - name: FBLA School Store Setup
     description: Student-led initiative to establish a functional school store for FBLA.
@@ -109,17 +161,28 @@ projects:
     highlights:
       - Helped stand up inventory, basic bookkeeping, and volunteer scheduling
       - Documented processes; handed off operations post-graduation
-    keywords:
-      -
+    keywords: []
+
+  - name: ACT Study System
+    description: Self-built study infrastructure developed in preparation for the ACT exam.
+    startDate: 2022-11-01
+    endDate: 2023-11-01
+    highlights:
+      - Completed all past and prior Khan Academy ACT courses over one year
+      - Created comprehensive study notes and published them online for others
+      - Built custom flashcard software to facilitate sharing of study materials
+    keywords: []
 
 volunteer:
   - organization: Unitarian Universalist Association
     position: Team Lead, Youth Spaces Revitalization
     location: Savannah, GA
     startDate: 2023-02-01
+    endDate: ~
     highlights:
       - Cleaned and restored two unused rooms into youth discussion/learning spaces
       - Organized volunteers, supplies, and timelines
+      - Received Youth Volunteer Recognition from Savannah Unitarian Universalist Church
 
 awards:
   - title: Eagle Scout
@@ -129,6 +192,17 @@ awards:
   - title: Reagan Presidential Leadership Award
     awarder: Reagan Foundation
     date: 2024-04-01
+
+  - title: Honored Delegate
+    awarder: Regional Model African Union
+    date: 2025-11-01
+    summary: >
+      Awarded after a democratic voting period following three days of
+      debate, recognizing resolve in fostering collaboration across diverse perspectives.
+
+  - title: Georgia Boys State Representative
+    awarder: American Legion Savannah Post 135
+    date: 2023-06-01
 
 testScores:
   - name: ACT
@@ -157,11 +231,51 @@ skills:
       - Git
       - Markdown
       - Rust
+      - Nix
+      - Elm
       - Google Docs
       - Google Sheets
+      - Web Development (Frontend, Backend, Server)
+
+  - name: Other
+    keywords:
+      - Red Cross First Aid Certified
+      - Clarinet (since 5th grade)
+      - Voice (School of Raq, Savannah)
+      - Computer Challenge Competitions
+
+extracurricular:
+  - activity: Cub Scouts and Boy Scouts
+    startDate: 2012-01-01
+    endDate: 2024-09-01
 
 languages:
   - language: English
     fluency: Native
   - language: Spanish
     fluency: Very Limited Working
+
+interests:
+  - Reading
+  - Walking
+  - Working Out
+  - Travel
+  - Open Source Software
+  - Puppies
+
+causes:
+  - Human Rights
+  - Politics
+  - Social Services
+  - Civil Rights and Social Action
+  - Health
+  - Environment
+  - Economic Empowerment
+  - Disaster and Humanitarian Relief
+  - Education
+  - Poverty Alleviation
+  - Science and Technology
+  - Veteran Support
+  - Animal Welfare
+  - Arts and Culture
+  - Children
