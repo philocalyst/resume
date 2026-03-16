@@ -13,7 +13,6 @@
 #show raw: set text(font: "JetBrains Mono")
 
 
-// --- Helper: Format Date ---
 #let format-date(date-str) = {
   if type(date-str) != str or date-str == "" { return none }
   let parts = date-str.split("-")
@@ -26,7 +25,6 @@
   months.at(parts.at(1), default: parts.at(1)) + " " + parts.at(0)
 }
 
-// --- Convert sys.inputs data to typed Resume object ---
 #let basics-data = data.at("basics", default: (:))
 #let location-data = basics-data.at("location", default: (:))
 #let profiles-data = basics-data.at("profiles", default: ())
@@ -111,7 +109,6 @@
   references: data.at("references", default: none),
 )
 
-// --- Render the resume using the custom template ---
 #show: resume.with(
   json-resume,
   accent-color: rgb("#5E81AC"),

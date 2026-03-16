@@ -1,9 +1,5 @@
 #import "@preview/typsy:0.2.2": class, Int, Str, Array, Union, None, Any
 
-// ============================================================================
-// JSON Resume Schema Classes (as provided)
-// ============================================================================
-
 #let Location = class(
     fields: (
         address: Union(Str, None),
@@ -162,10 +158,6 @@
     )
 )
 
-// ============================================================================
-// Helper Functions
-// ============================================================================
-
 #let format-location(location) = {
   if location == none { return "" }
   let parts = ()
@@ -195,9 +187,6 @@
     #left #h(1fr) #right
   ]
 }
-// ============================================================================
-// Section: Projects
-// ============================================================================
 
 #let render-projects(project-items) = {
   if project-items == none or project-items.len() == 0 { return }
@@ -250,10 +239,6 @@
     }
   }
 }
-
-// ============================================================================
-// Section: Volunteer
-// ============================================================================
 
 #let render-volunteer(volunteer-items) = {
   if volunteer-items == none or volunteer-items.len() == 0 { return }
@@ -312,10 +297,6 @@
   }
 }
 
-// ============================================================================
-// Section: Awards
-// ============================================================================
-
 #let render-awards(award-items) = {
   if award-items == none or award-items.len() == 0 { return }
 
@@ -344,10 +325,6 @@
     }
   }
 }
-
-// ============================================================================
-// Section: Publications
-// ============================================================================
 
 #let render-publications(pub-items) = {
   if pub-items == none or pub-items.len() == 0 { return }
@@ -619,10 +596,6 @@
   )
 }
 
-// ============================================================================
-// Section: About
-// ============================================================================
-
 #let render-about(basics) = {
   if basics == none or basics.summary == none { return }
   
@@ -630,10 +603,6 @@
   
   par(justify: true)[#basics.summary]
 }
-
-// ============================================================================
-// Section: Profiles
-// ============================================================================
 
 #let render-profiles(profiles) = {
   if profiles == none or profiles.len() == 0 { return }
@@ -830,10 +799,6 @@
     }
   }
 }
-
-// ============================================================================
-// Complete JSON Resume Renderer
-// ============================================================================
 
 #let render-json-resume(json-resume) = {
   resume(json-resume)[
