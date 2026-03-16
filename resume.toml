@@ -1,0 +1,357 @@
+[basics]
+name = "Dr. Sarah Chen"
+label = "Senior Software Engineer & Tech Lead"
+email = "sarah.chen@email.com"
+phone = "+1 (555) 123-4567"
+url = "https://sarahchen.dev"
+summary = "Full-stack engineer with 8+ years of experience building scalable distributed systems. Passionate about functional programming, type systems, and developer tooling. PhD in Computer Science with focus on programming language theory."
+image = "https://sarahchen.dev/profile.jpg"
+
+[basics.pronouns]
+display = "she/her"
+
+[basics.location]
+street = "742 Evergreen Terrace"
+city = "San Francisco"
+region = "CA"
+postalCode = "94102"
+countryCode = "US"
+
+[[basics.profiles]]
+network = "GitHub"
+username = "schen"
+url = "https://github.com/schen"
+
+[[basics.profiles]]
+network = "LinkedIn"
+username = "sarahchen"
+url = "https://linkedin.com/in/sarahchen"
+
+[[basics.profiles]]
+network = "Twitter"
+username = "sarahcodes"
+url = "https://twitter.com/sarahcodes"
+
+[[basics.profiles]]
+network = "Mastodon"
+username = "@sarah@fosstodon.org"
+url = "https://fosstodon.org/@sarah"
+
+[[basics.profiles]]
+network = "Medium"
+username = "sarahchen"
+url = "https://medium.com/@sarahchen"
+
+[[basics.profiles]]
+network = "StackOverflow"
+username = "schen"
+url = "https://stackoverflow.com/users/12345/schen"
+
+
+[[work]]
+name = "TechCorp Inc"
+location_type = "Hybrid"
+location_onSite = "San Francisco, CA"
+location_description = "3 days in office, 2 days remote"
+description = "Cloud infrastructure and developer tools company"
+position = "Senior Software Engineer & Tech Lead"
+url = "https://techcorp.example"
+startDate = "2020-03-01"
+employmentType = "FullTime"
+summary = "Lead a team of 6 engineers building distributed systems for real-time data processing. Architected migration from monolith to microservices serving 10M+ requests per day."
+highlights = [
+  "Reduced system latency by 65% through architectural redesign and optimization",
+  "Led adoption of Rust for performance-critical services, improving throughput by 3x",
+  "Mentored 4 junior engineers, 2 of whom were promoted to mid-level",
+  "Established on-call rotation and incident response procedures",
+  "Presented at internal tech talks on type-driven development",
+]
+
+[[work]]
+name = "StartupXYZ"
+location_type = "Remote"
+description = "Early-stage fintech startup"
+position = "Software Engineer"
+url = "https://startupxyz.example"
+startDate = "2018-06-01"
+endDate = "2020-02-01"
+employmentType = "FullTime"
+summary = "Full-stack engineer in a fast-paced startup environment. Built features across the stack from database to frontend."
+highlights = [
+  "Implemented real-time payment processing system handling $2M+ monthly volume",
+  "Built RESTful APIs serving mobile and web clients",
+  "Contributed to all phases of product development from design to deployment",
+]
+
+[[work]]
+name = "Self-Employed"
+location_type = "Remote"
+position = "Freelance Developer"
+startDate = "2017-01-01"
+endDate = "2018-05-01"
+employmentType = "Freelance"
+summary = "Provided web development and consulting services to small businesses and startups."
+highlights = [
+  "Delivered 12+ client projects on time and within budget",
+  "Specialized in React, Node.js, and PostgreSQL stacks",
+  "Maintained 100% client satisfaction rate",
+]
+
+
+[[education]]
+institution = "Stanford University"
+url = "https://stanford.edu"
+area = "Computer Science"
+studyType = "PhD"
+startDate = "2013-09-01"
+endDate = "2017-06-01"
+score_type = "GPA_Weighted"
+score = 3.95
+score_scale = 4.0
+courses = [
+  "Advanced Type Systems",
+  "Compiler Construction",
+  "Distributed Systems",
+  "Program Analysis and Verification",
+]
+
+[[education]]
+institution = "UC Berkeley"
+url = "https://berkeley.edu"
+area = "Computer Science"
+studyType = "BachelorDegree"
+startDate = "2009-08-01"
+endDate = "2013-05-01"
+score_type = "GPA_Weighted"
+score = 4.15
+score_scale = 5.0
+courses = [
+  "Data Structures and Algorithms",
+  "Operating Systems",
+  "Computer Architecture",
+  "Artificial Intelligence",
+]
+
+[[education]]
+institution = "Fullstack Academy"
+url = "https://fullstackacademy.com"
+area = "Web Development"
+studyType = "Bootcamp"
+startDate = "2016-06-01"
+endDate = "2016-09-01"
+score_type = "PassFail"
+score = true
+
+
+[[skills]]
+name = "Programming Languages"
+level = "Expert"
+keywords = ["Rust", "TypeScript", "JavaScript", "Python", "Go", "Haskell", "OCaml"]
+
+[[skills]]
+name = "Web Technologies"
+level = "Expert"
+keywords = ["React", "Node.js", "GraphQL", "REST APIs", "WebAssembly", "HTML", "CSS"]
+
+[[skills]]
+name = "Infrastructure & DevOps"
+level = "Advanced"
+keywords = ["Kubernetes", "Docker", "AWS", "PostgreSQL", "Redis", "Terraform", "CI/CD"]
+
+[[skills]]
+name = "Tools & Practices"
+level = "Expert"
+keywords = ["Git", "Test-Driven Development", "Code Review", "Agile", "System Design"]
+
+[[skills]]
+name = "Configuration Languages"
+level = "Advanced"
+keywords = ["Dhall", "YAML", "JSON", "TOML"]
+
+
+[[languages]]
+language = "English"
+fluency = "NativeOrBilingual"
+
+[[languages]]
+language = "Mandarin"
+fluency = "NativeOrBilingual"
+
+[[languages]]
+language = "Spanish"
+fluency = "ProfessionalWorking"
+
+[[languages]]
+language = "French"
+fluency = "LimitedWorking"
+
+
+[[projects]]
+name = "RustQL"
+description = "Type-safe GraphQL client library for Rust with compile-time query validation"
+type = "OpenSource"
+url = "https://github.com/schen/rustql"
+startDate = "2021-03-01"
+roles = ["Creator", "Maintainer"]
+highlights = [
+  "1,200+ GitHub stars",
+  "Used by 50+ production applications",
+  "Featured in Rust weekly newsletter",
+]
+keywords = ["Rust", "GraphQL", "Type Systems", "Code Generation"]
+
+[[projects]]
+name = "Dhall Generator"
+description = "Tool for generating beautiful resumes from Dhall configuration files"
+type = "Application"
+url = "https://github.com/schen/dhall-resume"
+startDate = "2023-11-01"
+roles = ["Creator"]
+highlights = [
+  "Supports multiple output formats (PDF, HTML, Markdown)",
+  "Type-safe configuration with Dhall",
+  "Customizable themes and layouts",
+]
+keywords = ["Dhall", "TypeScript", "PDF Generation"]
+
+[[projects]]
+name = "Tech Talks: Functional Programming in Production"
+description = "Series of conference talks on adopting functional programming in industry"
+type = "Talk"
+startDate = "2022-01-01"
+roles = ["Speaker"]
+highlights = [
+  "Presented at 5 conferences including StrangeLoop and LambdaConf",
+  "Reached 2000+ attendees across all talks",
+  "Published accompanying blog series with 50k+ views",
+]
+keywords = ["Public Speaking", "Functional Programming", "Type Systems"]
+
+[[projects]]
+name = "Community Photography Exhibition"
+description = "Curated photography exhibition showcasing Bay Area tech culture"
+type = "Exhibition"
+startDate = "2023-03-01"
+endDate = "2023-03-31"
+roles = ["Photographer", "Curator"]
+highlights = [
+  "Featured 40 original photographs",
+  "Exhibited at local gallery with 500+ visitors",
+  "Raised $5000 for STEM education nonprofits",
+]
+keywords = ["Photography", "Art", "Community"]
+
+[[projects]]
+name = "Tech Diversity Mentorship Program"
+description = "Founded mentorship program pairing senior engineers with underrepresented minorities"
+type = "Mentorship"
+startDate = "2021-06-01"
+roles = ["Founder", "Mentor"]
+entity = "Tech Community Foundation"
+highlights = [
+  "Mentored 8 junior engineers over 2 years",
+  "3 mentees received promotions during program",
+  "Program expanded to 25+ mentor-mentee pairs",
+]
+keywords = ["Mentorship", "Diversity", "Community"]
+
+
+[[publications]]
+name = "Type-Preserving Compilation for Large-Scale Optimizing Compilers"
+publisher = "ACM SIGPLAN"
+releaseDate = "2016-06-15"
+url = "https://dl.acm.org/doi/example"
+summary = "Presented novel techniques for maintaining type information through aggressive compiler optimizations, enabling better error messages and verification."
+
+[[publications]]
+name = "The Pragmatic Type Theorist's Guide to Rust"
+publisher = "Medium"
+releaseDate = "2022-08-01"
+url = "https://medium.com/@schen/pragmatic-type-theory"
+summary = "Popular blog series exploring Rust's type system through the lens of programming language theory. 5-part series with 100k+ cumulative views."
+
+
+[[certificates]]
+name = "AWS Certified Solutions Architect - Professional"
+issuer = "Amazon Web Services"
+date = "2022-03-15"
+expirationDate = "2025-03-15"
+url = "https://aws.amazon.com/certification/"
+
+[[certificates]]
+name = "Certified Kubernetes Administrator (CKA)"
+issuer = "Cloud Native Computing Foundation"
+date = "2021-09-20"
+expirationDate = "2024-09-20"
+url = "https://www.cncf.io/certification/cka/"
+
+
+[[awards]]
+title = "Best Paper Award"
+date = "2016-06-15"
+awarder = "PLDI 2016"
+summary = "Recognized for outstanding research contribution in programming languages"
+
+[[awards]]
+title = "Graduate Fellowship"
+date = "2013-09-01"
+awarder = "National Science Foundation"
+summary = "Competitive fellowship for PhD studies in Computer Science"
+
+[[awards]]
+title = "Top 10 Tech Influencers in Functional Programming"
+date = "2023-12-01"
+awarder = "Functional Programming Magazine"
+summary = "Recognized for contributions to functional programming community through talks, writing, and open source"
+
+
+[[volunteer]]
+organization = "Code for America"
+position = "Volunteer Developer"
+url = "https://codeforamerica.org"
+location_type = "Remote"
+startDate = "2019-01-01"
+summary = "Contribute to civic tech projects improving government services"
+highlights = [
+  "Built web application for voter registration assistance",
+  "Mentored new volunteers on project onboarding",
+]
+
+[[volunteer]]
+organization = "SF SPCA"
+position = "Dog Walker & Event Volunteer"
+url = "https://sfspca.org"
+location_type = "OnSite"
+location = "San Francisco, CA"
+startDate = "2020-06-01"
+summary = "Weekly volunteer helping care for shelter animals and supporting adoption events"
+highlights = [
+  "Walked shelter dogs 3x per week for 3 years",
+  "Helped facilitate 50+ successful adoptions at events",
+]
+
+
+[[interests]]
+name = "Open Source Software"
+keywords = ["Rust", "Type Systems", "Developer Tools", "Programming Languages"]
+
+[[interests]]
+name = "Photography"
+keywords = ["Street Photography", "Landscape", "Film Photography", "Darkroom"]
+
+[[interests]]
+name = "Outdoor Activities"
+keywords = ["Hiking", "Rock Climbing", "Backpacking", "Trail Running"]
+
+[[interests]]
+name = "Music"
+keywords = ["Piano", "Jazz", "Classical", "Vinyl Collecting"]
+
+
+[[references]]
+name = "Dr. James Wilson"
+reference = "Sarah was one of the most talented PhD students I've advised. Her research on type systems was groundbreaking, and her ability to explain complex concepts is exceptional. She would be an asset to any team."
+
+[[references]]
+name = "Alex Rodriguez, CTO at TechCorp"
+reference = "Sarah is an exceptional technical leader who combines deep expertise with excellent mentorship skills. She transformed our engineering culture and delivered outstanding results. I can't recommend her highly enough."
