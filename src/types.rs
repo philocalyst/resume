@@ -93,9 +93,12 @@ where
 
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[serde(tag = "type")]
 pub enum LocationType {
     Remote,
-    OnSite(String),
+    OnSite {
+        value: String,
+    },
     Hybrid {
         #[cfg_attr(feature = "serde", serde(rename = "onSite"))]
         on_site: String,
@@ -108,9 +111,9 @@ impl IntoValue for LocationType {
     fn into_value(self) -> Value {
         match self {
             Self::Remote => "Remote".into_value(),
-            Self::OnSite(val) => {
+            Self::OnSite { value } => {
                 let mut d = Dict::new();
-                d.insert("OnSite".into(), val.into_value());
+                d.insert("OnSite".into(), value.into_value());
                 Value::Dict(d)
             }
             Self::Hybrid {
@@ -132,12 +135,12 @@ impl IntoValue for LocationType {
 
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
+#[cfg_attr(feature = "serde", serde(untagged))]
 pub enum Score {
-    GPA_Weighted { score: f64, scale: f64 },
+    GPA_Weighted { score: f64, scale: String },
     Percentage(u32),
     PassFail(bool),
     LetterGrade(String),
-    Custom { score: String, scale: String },
 }
 
 #[cfg(feature = "typst")]
@@ -165,14 +168,6 @@ impl IntoValue for Score {
             Self::LetterGrade(val) => {
                 let mut d = Dict::new();
                 d.insert("LetterGrade".into(), val.into_value());
-                Value::Dict(d)
-            }
-            Self::Custom { score, scale } => {
-                let mut content = Dict::new();
-                content.insert("score".into(), score.into_value());
-                content.insert("scale".into(), scale.into_value());
-                let mut d = Dict::new();
-                d.insert("Custom".into(), Value::Dict(content));
                 Value::Dict(d)
             }
         }
@@ -634,7 +629,7 @@ impl IntoValue for PronounSet {
 #[cfg_attr(feature = "serde", derive(Serialize, Deserialize))]
 pub struct Pronouns {
     pub primary: Option<PronounSet>,
-    pub additional: Vec<PronounSet>,
+    pub additional: Option<Vec<PronounSet>>,
     pub display: String,
 }
 
@@ -674,7 +669,7 @@ pub struct Basics {
     pub profiles: Option<Vec<Profile>>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -725,18 +720,8 @@ pub struct Work {
     pub position: Option<String>,
     pub url: Option<Url>,
 
-    #[cfg_attr(feature = "serde", serde(rename = "startDate"))]
-    #[cfg_attr(
-        feature = "serde",
-        serde(deserialize_with = "deserialize_optional_iso8601")
-    )]
     pub start_date: Option<String>,
 
-    #[cfg_attr(feature = "serde", serde(rename = "endDate"))]
-    #[cfg_attr(
-        feature = "serde",
-        serde(deserialize_with = "deserialize_optional_iso8601")
-    )]
     pub end_date: Option<String>,
 
     pub summary: Option<String>,
@@ -745,7 +730,7 @@ pub struct Work {
     pub employment_type: Option<EmploymentType>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -794,25 +779,15 @@ pub struct Volunteer {
     pub url: Option<Url>,
     pub location: Option<LocationType>,
 
-    #[cfg_attr(feature = "serde", serde(rename = "startDate"))]
-    #[cfg_attr(
-        feature = "serde",
-        serde(deserialize_with = "deserialize_optional_iso8601")
-    )]
     pub start_date: Option<String>,
 
-    #[cfg_attr(feature = "serde", serde(rename = "endDate"))]
-    #[cfg_attr(
-        feature = "serde",
-        serde(deserialize_with = "deserialize_optional_iso8601")
-    )]
     pub end_date: Option<String>,
 
     pub summary: Option<String>,
     pub highlights: Option<Vec<String>>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -857,25 +832,15 @@ pub struct Education {
     #[cfg_attr(feature = "serde", serde(rename = "studyType"))]
     pub study_type: Option<DegreeType>,
 
-    #[cfg_attr(feature = "serde", serde(rename = "startDate"))]
-    #[cfg_attr(
-        feature = "serde",
-        serde(deserialize_with = "deserialize_optional_iso8601")
-    )]
     pub start_date: Option<String>,
 
-    #[cfg_attr(feature = "serde", serde(rename = "endDate"))]
-    #[cfg_attr(
-        feature = "serde",
-        serde(deserialize_with = "deserialize_optional_iso8601")
-    )]
     pub end_date: Option<String>,
 
-    pub score: Option<Score>,
+    pub grade: Option<Score>,
     pub courses: Option<Vec<String>>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -900,7 +865,7 @@ impl IntoValue for Education {
         if let Some(end_date) = self.end_date {
             dict.insert("endDate".into(), end_date.into_value());
         }
-        if let Some(score) = self.score {
+        if let Some(score) = self.grade {
             dict.insert("score".into(), score.into_value());
         }
         if let Some(courses) = self.courses {
@@ -925,7 +890,7 @@ pub struct Award {
     pub summary: Option<String>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -970,7 +935,7 @@ pub struct Certificate {
     pub expiration_date: Option<String>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -1013,7 +978,7 @@ pub struct Publication {
     pub summary: Option<String>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -1047,7 +1012,7 @@ pub struct Skill {
     pub keywords: Option<Vec<String>>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -1074,7 +1039,7 @@ pub struct Language {
     pub fluency: Option<FluencyLevel>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -1098,7 +1063,7 @@ pub struct Interest {
     pub keywords: Option<Vec<String>>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -1122,7 +1087,7 @@ pub struct Reference {
     pub reference: Option<String>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -1147,18 +1112,8 @@ pub struct Project {
     pub highlights: Option<Vec<String>>,
     pub keywords: Option<Vec<String>>,
 
-    #[cfg_attr(feature = "serde", serde(rename = "startDate"))]
-    #[cfg_attr(
-        feature = "serde",
-        serde(deserialize_with = "deserialize_optional_iso8601")
-    )]
-    pub start_date: Option<String>,
+    pub start_date: String,
 
-    #[cfg_attr(feature = "serde", serde(rename = "endDate"))]
-    #[cfg_attr(
-        feature = "serde",
-        serde(deserialize_with = "deserialize_optional_iso8601")
-    )]
     pub end_date: Option<String>,
 
     pub url: Option<Url>,
@@ -1169,7 +1124,7 @@ pub struct Project {
     pub project_type: Option<ProjectType>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -1188,12 +1143,8 @@ impl IntoValue for Project {
         if let Some(keywords) = self.keywords {
             dict.insert("keywords".into(), keywords.into_value());
         }
-        if let Some(start_date) = self.start_date {
-            dict.insert("startDate".into(), start_date.into_value());
-        }
-        if let Some(end_date) = self.end_date {
-            dict.insert("endDate".into(), end_date.into_value());
-        }
+        dict.insert("startDate".into(), self.start_date.into_value());
+        dict.insert("endDate".into(), self.end_date.into_value());
         if let Some(url) = self.url {
             dict.insert("url".into(), url.to_string().into_value());
         }
@@ -1237,7 +1188,7 @@ pub struct Meta {
     pub last_modified: Option<LastModified>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -1282,7 +1233,7 @@ pub struct Resume {
     pub meta: Option<Meta>,
 
     #[cfg_attr(feature = "serde", serde(flatten))]
-    pub additional_properties: HashMap<String, serde_json::Value>,
+    pub additional_properties: HashMap<String, toml::Value>,
 }
 
 #[cfg(feature = "typst")]
@@ -1477,7 +1428,7 @@ mod tests {
             }]
         }"#;
 
-        let resume: Resume = serde_json::from_str(json).unwrap();
+        let resume: Resume = toml::from_str(json).unwrap();
         assert_eq!(
             resume.basics.as_ref().unwrap().name.as_ref().unwrap(),
             "John Doe"
@@ -1493,7 +1444,7 @@ mod tests {
             }
         }"#;
 
-        let result: Result<Resume, _> = serde_json::from_str(json);
+        let result: Result<Resume, _> = toml::from_str(json);
         assert!(result.is_err());
     }
 
@@ -1506,7 +1457,7 @@ mod tests {
             }]
         }"#;
 
-        let result: Result<Resume, _> = serde_json::from_str(json);
+        let result: Result<Resume, _> = toml::from_str(json);
         assert!(result.is_err());
     }
 
@@ -1521,7 +1472,7 @@ mod tests {
             }
         }"#;
 
-        let result: Result<Resume, _> = serde_json::from_str(json);
+        let result: Result<Resume, _> = toml::from_str(json);
         assert!(result.is_err());
     }
 
@@ -1538,7 +1489,7 @@ mod tests {
             }]
         }"#;
 
-        let resume: Result<Resume, _> = serde_json::from_str(json);
+        let resume: Result<Resume, _> = toml::from_str(json);
         assert!(resume.is_ok());
     }
 
@@ -1682,7 +1633,7 @@ mod tests {
             }]
         }"#;
 
-        let resume: Resume = serde_json::from_str(json).expect("Failed to deserialize");
+        let resume: Resume = toml::from_str(json).expect("Failed to deserialize");
         let val = resume.into_value();
         if let Value::Dict(dict) = val {
             assert!(dict.get("basics").is_ok());

@@ -3,10 +3,10 @@ use clap::{Parser, Subcommand, ValueEnum};
 use std::fs;
 use std::path::PathBuf;
 
-mod json_resume;
 mod resumes;
-use crate::json_resume::Resume;
+mod types;
 use crate::resumes::Available;
+use crate::types::Resume;
 
 #[derive(Parser)]
 #[command(name = "resume-bakery")]
@@ -18,20 +18,20 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Initialize a new resume.json file
+    /// Initialize a new resume.toml file
     Init {
-        #[arg(short, long, default_value = "resume.json")]
+        #[arg(short, long, default_value = "resume.toml")]
         output: PathBuf,
     },
-    /// Validate the resume.json against the internal schema
+    /// Validate the resume.toml against the internal schema
     Validate {
-        #[arg(short, long, default_value = "resume.json")]
+        #[arg(short, long, default_value = "resume.toml")]
         input: PathBuf,
     },
     /// Export the resume to a specific format
     Export {
-        /// Path to the resume.json file
-        #[arg(short, long, default_value = "resume.json")]
+        /// Path to the resume.toml file
+        #[arg(short, long, default_value = "resume.toml")]
         input: PathBuf,
 
         /// Path for the output file
@@ -70,7 +70,7 @@ fn main() -> Result<()> {
 
     match cli.command {
         Commands::Init { output } => {
-            let default_resume = serde_json::to_string_pretty(&Resume::default())?;
+            let default_resume = toml::to_string_pretty(&Resume::default())?;
             fs::write(&output, default_resume)
                 .with_context(|| format!("Failed to create {:?}", output))?;
             println!("Initialized new resume at {:?}", output);
@@ -78,8 +78,7 @@ fn main() -> Result<()> {
         Commands::Validate { input } => {
             let data = fs::read_to_string(&input)
                 .with_context(|| format!("Could not read {:?}", input))?;
-            let _: Resume = serde_dhall::from_str(&data)
-                .parse()
+            let _: Resume = toml::from_str(&data)
                 .with_context(|| "Validation failed: JSON does not match Resume schema")?;
             println!("{:?}: Valid.", input);
         }
@@ -92,9 +91,8 @@ fn main() -> Result<()> {
             // Read and parse
             let data = fs::read_to_string(&input)
                 .with_context(|| format!("Could not read {:?}", input))?;
-            let resume: Resume = serde_dhall::from_str(&data)
-                .parse()
-                .with_context(|| "Failed to parse resume JSON")?;
+            let resume: Resume =
+                toml::from_str(&data).with_context(|| "Failed to parse resume JSON")?;
 
             // Bake with Typst
             let source_document = bake_doc!(template, resume, {
